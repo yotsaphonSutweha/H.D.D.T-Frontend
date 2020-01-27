@@ -1,13 +1,13 @@
-import React from 'react';
-import Header from './layout/Header'
+import React, { Component } from 'react';
+import PrimaryButton from './layout/PrimaryBotton';
 
 
-function Register() {
+class RegisterForm extends Component {
+  render () {
   const url = process.env.REACT_APP_SERVER_SIDE_URL;
   console.log(url);
   return (
     <div className="App">
-        <Header/>
         <div className="container">
             <form method="POST" action={process.env.REACT_APP_SERVER_SIDE_URL + 'register'}>
                 <div className="form-row">
@@ -56,11 +56,12 @@ function Register() {
                         <input type="text" className="form-control" name="ward" required/>
                     </div>
                 </div>
-                <button type="submit" className="btn btn-primary">Submit</button>
+                <PrimaryButton />
             </form>
         </div>
     </div>
   );
+  };
 }
 
-export default Register;
+export default RegisterForm;
