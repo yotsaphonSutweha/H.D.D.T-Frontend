@@ -1,7 +1,6 @@
 import React ,{ Component } from 'react';
 import PrimaryButton from './layout/PrimaryBotton';
-import GeneralDetails from './GeneralDetails';
-import MedicalDetails from './MedicalDetails';
+import Result from './Results';
 import axios from 'axios';
 class DiagnosePatientForm extends Component {
     constructor(props) {
@@ -27,7 +26,9 @@ class DiagnosePatientForm extends Component {
             oldpeak: '',
             slope: '',
             ca: '',
-            thal: ''
+            thal: '',
+            completedDiagnosis: false,
+            results: {}
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -73,10 +74,26 @@ class DiagnosePatientForm extends Component {
                 ca: this.state.ca,
                 thal: this.state.thal
             }
-        }).then(res => {console.log(res)});
+        }).then(res => {
+            console.log(this.state.completedDiagnosis)
+            // this.state.results.prediction = res.data.final_prediction;
+            // this.state.results.accuracy = res.data.accuracy;
+            // this.state.completedDiagnosis = true;
+            this.setState({
+                completedDiagnosis : true,
+                results : res.data
+            });
+            console.log(this.state.completedDiagnosis)
+        });
 
     }
     render () {
+        if (this.state.completedDiagnosis) {
+            console.log(this.state.results.accuracy)
+            console.log(this.state.results)
+            return <Result diagnosticResult = {this.state.results}/>
+        } 
+        else {
         return (
             <div className="container">
                 <h1>Add patient</h1>
@@ -229,6 +246,7 @@ class DiagnosePatientForm extends Component {
                 </form>
             </div>
         );
+        }
     }
 }
 
