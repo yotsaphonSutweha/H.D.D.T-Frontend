@@ -4,7 +4,8 @@ import Registration from './components/Pages/Registration';
 import ViewPatients from './components/Pages/ViewPatients';
 import LoggedIn from './components/LoggedIn';
 import Login from './components/Pages/LogIn';
-
+import ViewPatient from './components/Pages/ViewPatient';
+import DiagnosePatient from './components/Pages/DiagnosePatient';
 import {BrowserRouter as Router, Route} from 'react-router-dom'
 
 class App extends Component {
@@ -31,6 +32,12 @@ class App extends Component {
             <React.Fragment>
               <ViewPatients />
             </React.Fragment>
+          )}/>
+           <Route path="/patient" render={(props) => (
+              <ViewPatient locationSearch={props.location.search} />
+          )}/>
+          <Route path="/diagnose-patient" render={(props) => (
+            <DiagnosePatient />
           )}/>
         </div>
       </Router>
