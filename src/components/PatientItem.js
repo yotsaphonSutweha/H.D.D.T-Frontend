@@ -13,7 +13,7 @@ class PatientItem extends Component {
                 <p>{this.props.patient.medical_data.age}</p>
                 <p>{this.props.patient.medical_data.diagnosis}</p>
                 <p>{this.props.patient.severity}</p>
-                <a href={'http://localhost:3000/patient?id=' + this.props.patient._id.$oid}>View</a>
+                <a href={'patient?id=' + this.props.patient._id.$oid}>View</a>
             </div>
         );
     }
