@@ -3,18 +3,19 @@ import Header from '../layout/Header'
 import qs from 'query-string';
 import axios from 'axios';
 import PatientDetails from '../PatientDetails';
+import UpdatePatientDetailsForm from '../UpdatePatientDetailsForm';
 class ViewPatient extends Component {
-    // constructor (props) {
-    //     super(props)
-    //     this.state = {
-    //         patient : []
-    //     }
-    // }
     state = {
         patient : []
     }
-    componentDidMount() {
+
+    getParsedQuery() {
         const parsedQuery = qs.parse(this.props.locationSearch)
+        return parsedQuery;
+    }
+
+    componentDidMount() {
+        const parsedQuery = this.getParsedQuery();
         axios({
             headers : {
                 'Access-Control-Allow-Origin': '*',
@@ -28,8 +29,9 @@ class ViewPatient extends Component {
 
     render () {
         const title = "Patient page";
+        const parsedQuery = this.getParsedQuery();
         return (
-            <PatientDetails patientDetails = {this.state.patient}/>
+            parsedQuery.q == 'update' ? <UpdatePatientDetailsForm patientId = {parsedQuery.id} /> : <PatientDetails patientDetails = {this.state.patient}/>
         );
     }
 }

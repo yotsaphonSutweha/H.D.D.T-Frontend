@@ -12,7 +12,7 @@ class ViewPatients extends Component {
         axios({
             headers : {
                 'Access-Control-Allow-Origin': '*',
-                'ccess-Control-Allow-Credentials': true
+                'Access-Control-Allow-Credentials': true
             },
             method: 'GET',
             url: process.env.REACT_APP_SERVER_SIDE_URL + 'api/patients',

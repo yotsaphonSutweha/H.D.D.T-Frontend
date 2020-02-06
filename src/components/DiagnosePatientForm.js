@@ -40,7 +40,6 @@ class DiagnosePatientForm extends Component {
     }
 
     handleSubmit(event) {
-        alert('A name was submitted: age ' + this.state.age + " gender: " + this.state.gender + ' thal ' + this.state.thal + ' thalach ' + this.state.thalach + ' exang ' + this.state.exang + ' fbs ' + this.state.fbs + ' oldpeak ' + this.state.oldpeak + ' restecg ' + this.state.restecg + ' ca ' + this.state.ca + ' slope ' + this.state.slope + ' chol ' + this.state.chol + ' cp ' + this.state.cp + ' trestbps ' + this.state.trestbps);
         event.preventDefault();
         axios({
             headers : {
@@ -76,9 +75,6 @@ class DiagnosePatientForm extends Component {
             }
         }).then(res => {
             console.log(this.state.completedDiagnosis)
-            // this.state.results.prediction = res.data.final_prediction;
-            // this.state.results.accuracy = res.data.accuracy;
-            // this.state.completedDiagnosis = true;
             this.setState({
                 completedDiagnosis : true,
                 results : res.data
