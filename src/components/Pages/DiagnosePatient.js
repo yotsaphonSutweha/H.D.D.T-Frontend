@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
 import DiagnosePatientForm from '../DiagnosePatientForm';
+import Navbar from '../layout/Navbar';
+
 
 class DiagnosePatient extends Component {
     render () {
         return (
-           <DiagnosePatientForm />
+            <div>
+                <Navbar />
+                <DiagnosePatientForm/>
+            </div>
         );
     }
 }   

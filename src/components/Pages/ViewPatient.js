@@ -4,6 +4,7 @@ import qs from 'query-string';
 import axios from 'axios';
 import PatientDetails from '../PatientDetails';
 import UpdatePatientDetailsForm from '../UpdatePatientDetailsForm';
+import Navbar from '../layout/Navbar';
 class ViewPatient extends Component {
     state = {
         patient : []
@@ -31,7 +32,10 @@ class ViewPatient extends Component {
         const title = "Patient page";
         const parsedQuery = this.getParsedQuery();
         return (
-            parsedQuery.q == 'update' ? <UpdatePatientDetailsForm patientId = {parsedQuery.id} /> : <PatientDetails patientDetails = {this.state.patient}/>
+            <div>
+                <Navbar />
+                {parsedQuery.q == 'update' ? <UpdatePatientDetailsForm patientId = {parsedQuery.id} /> : <PatientDetails patientDetails = {this.state.patient}/>}
+            </div>
         );
     }
 }

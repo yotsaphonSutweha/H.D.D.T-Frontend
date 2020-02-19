@@ -3,7 +3,7 @@ import PatientList from '../PatientList';
 import Header from '../layout/Header'
 import axios from 'axios';
 import PropTypes from 'prop-types';
-
+import Navbar from '../layout/Navbar';
 class ViewPatients extends Component {
     state = {
         patients : []
@@ -23,8 +23,11 @@ class ViewPatients extends Component {
         const title = "Patients page";
         return (
             <div>
-                <Header title={title}/>
-                <PatientList patients={this.state.patients}/>
+                <Navbar />
+                <div className="container">
+                    <Header title={title}/>
+                    <PatientList patients={this.state.patients}/>
+                </div>
             </div>
         );
     }

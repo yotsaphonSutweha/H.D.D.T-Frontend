@@ -48,18 +48,40 @@ class PatientItem extends Component {
     render () {
         console.log(this.props.patient._id['$oid'])
         return (
-            <div> 
-                <p>{this.state.first_name}</p>
-                <p>{this.state.second_name}</p>
-                <p>{this.state.address}</p>
-                <p>{this.state.contact_number}</p>
-                <p>{this.state.age}</p>
-                <p>{this.state.diagnosis}</p>
-                <a href={'patient?id=' + this.props.patient._id.$oid}>View</a>
-                <a href={'patient?id=' + this.props.patient._id.$oid + '&q=update'}>Update</a>
-                 <button  type='submit' className='btn btn-danger' onClick={e => this.handleDelete(e)}>
-                    Delete
-                </button>
+            <div className="card card-wrapper"> 
+                <div className="row row-wrapper">
+                    <div className="col-lg-2">
+                        <p className="patient-detail">{this.state.first_name}</p>
+                    </div>
+                    <div className="col-lg-2">
+                        <p className="patient-detail">{this.state.second_name}</p>
+                    </div>
+                    <div className="col-lg-2">
+                        <p className="patient-detail">{this.state.address}</p>
+                    </div>
+                    <div className="col-lg-2">
+                        <p className="patient-detail">{this.state.contact_number}</p>
+                    </div>
+                    <div className="col-lg-2">
+                        <p className="patient-detail">{this.state.age}</p>
+                    </div>
+                    <div className="col-lg-2">
+                        <p className="patient-detail">{this.state.diagnosis}</p>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-lg-1">
+                        <a href={'patient?id=' + this.props.patient._id.$oid}className="btn btn-primary button">View</a>
+                    </div>
+                    <div className="col-lg-1">
+                        <a href={'patient?id=' + this.props.patient._id.$oid + '&q=update'} className="btn btn-secondary button">Update</a>
+                    </div>
+                    <div className="col-lg-1">
+                        <button  type='submit' className="btn btn-danger button" onClick={e => this.handleDelete(e)}>
+                            Delete
+                        </button>
+                    </div>
+                </div>
             </div>
         );
     }

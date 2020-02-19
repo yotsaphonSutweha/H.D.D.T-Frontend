@@ -2,6 +2,7 @@ import React ,{ Component } from 'react';
 import PrimaryButton from './layout/PrimaryBotton';
 import Result from './Results';
 import axios from 'axios';
+import Header from './layout/Header';
 class DiagnosePatientForm extends Component {
     constructor(props) {
         super(props)
@@ -92,154 +93,156 @@ class DiagnosePatientForm extends Component {
         else {
         return (
             <div className="container">
-                <h1>Add patient</h1>
-                <form onSubmit={this.handleSubmit}>
-                    <div className="form-row">
-                        <div className="form-group col-md-4">
-                            <label for="first_name">First name</label>
-                            <input type="text" className= "form-control" name="firstName" value={this.state.firstName} onChange={this.handleChange}></input>
-                        </div>
-                        <div className="form-group col-md-4">
-                            <label for="second_name">Second name</label>
-                            <input type="text" className= "form-control" name="secondName" value={this.state.secondName} onChange={this.handleChange}></input>
-                        </div>
-                        <div className="form-group col-md-4">
-                            <label for="contact_number">Contact number</label>
-                            <input type="text" className= "form-control" name="contactNumber" value={this.state.contactNumber} onChange={this.handleChange}></input>
-                        </div>
-                    </div>
-                    <div className="form-group">
-                        <label for="address">Full address</label>
-                        <input type="text" className= "form-control" name="address" value={this.state.address} onChange={this.handleChange}></input>
-                    </div>
-                    <div className="form-group"> 
-                    <h4>Next of Kin</h4>
+                <Header title="Diagnose Patient"/>
+                <div className="card-wrapper">
+                    <form onSubmit={this.handleSubmit}>
                         <div className="form-row">
-                            <div className="form-group col-md-6">
-                                <label for="nextOfKin1FirstName">First name</label>
-                                <input type="text" className="form-control" name="nextOfKin1FirstName" value={this.state.nextOfKin1FirstName} onChange={this.handleChange}></input>
+                            <div className="form-group col-md-4">
+                                <label for="first_name">First name</label>
+                                <input type="text" className= "form-control" name="firstName" value={this.state.firstName} onChange={this.handleChange}></input>
                             </div>
-                            <div className="form-group col-md-6">
-                                <label for="nextOfKin1SecondName">Second name</label>
-                                <input type="text" className="form-control" name="nextOfKin1SecondName" value={this.state.nextOfKin1SecondName} onChange={this.handleChange}></input>
+                            <div className="form-group col-md-4">
+                                <label for="second_name">Second name</label>
+                                <input type="text" className= "form-control" name="secondName" value={this.state.secondName} onChange={this.handleChange}></input>
                             </div>
-                            <div className="form-group col-md-6">
-                                <label for="nextOfKin1FirstName">First name</label>
-                                <input type="text" className="form-control" name="nextOfKin2FirstName" value={this.state.nextOfKin2FirstName} onChange={this.handleChange}></input>
-                            </div>
-                            <div className="form-group col-md-6">
-                                <label for="nextOfKin1SecondName">Second name</label>
-                                <input type="text" className="form-control" name="nextOfKin2SecondName" value={this.state.nextOfKin2SecondName} onChange={this.handleChange}></input>
+                            <div className="form-group col-md-4">
+                                <label for="contact_number">Contact number</label>
+                                <input type="text" className= "form-control" name="contactNumber" value={this.state.contactNumber} onChange={this.handleChange}></input>
                             </div>
                         </div>
-                    </div>
+                        <div className="form-group">
+                            <label for="address">Full address</label>
+                            <input type="text" className= "form-control" name="address" value={this.state.address} onChange={this.handleChange}></input>
+                        </div>
+                        <div className="form-group"> 
+                        <h4>Next of Kin</h4>
+                            <div className="form-row">
+                                <div className="form-group col-md-6">
+                                    <label for="nextOfKin1FirstName">First name</label>
+                                    <input type="text" className="form-control" name="nextOfKin1FirstName" value={this.state.nextOfKin1FirstName} onChange={this.handleChange}></input>
+                                </div>
+                                <div className="form-group col-md-6">
+                                    <label for="nextOfKin1SecondName">Second name</label>
+                                    <input type="text" className="form-control" name="nextOfKin1SecondName" value={this.state.nextOfKin1SecondName} onChange={this.handleChange}></input>
+                                </div>
+                                <div className="form-group col-md-6">
+                                    <label for="nextOfKin1FirstName">First name</label>
+                                    <input type="text" className="form-control" name="nextOfKin2FirstName" value={this.state.nextOfKin2FirstName} onChange={this.handleChange}></input>
+                                </div>
+                                <div className="form-group col-md-6">
+                                    <label for="nextOfKin1SecondName">Second name</label>
+                                    <input type="text" className="form-control" name="nextOfKin2SecondName" value={this.state.nextOfKin2SecondName} onChange={this.handleChange}></input>
+                                </div>
+                            </div>
+                        </div>
 
-                    <div className="form-row">
-                        <div className="form-group col-md-3">
-                            <label for="age">Age</label>
-                            <input type="text" className="form-control" name="age" value={this.state.age} onChange={this.handleChange} required></input>
+                        <div className="form-row">
+                            <div className="form-group col-md-3">
+                                <label for="age">Age</label>
+                                <input type="text" className="form-control" name="age" value={this.state.age} onChange={this.handleChange} required></input>
+                            </div>
+                            <div className="form-group col-md-3">
+                                <label for="gender">Gender</label>
+                                <select className="form-control" name="gender" value={this.state.gender} onChange={this.handleChange} required>
+                                    <option selected>Choose...</option>
+                                    <option>0</option>
+                                    <option>1</option>
+                                </select>
+                            </div>
+                            <div className="form-group col-md-3">
+                                <label for="chol">Chol</label>
+                                <input type="text" className="form-control" name="chol" value={this.state.chol} onChange={this.handleChange} required></input>
+                            </div>
+                            <div className="form-group col-md-3">
+                                <label for="thalach">Thalach</label>
+                                <input type="text" className="form-control" name="thalach" value={this.state.thalach} onChange={this.handleChange} required></input>
+                            </div>
                         </div>
-                        <div className="form-group col-md-3">
-                            <label for="gender">Gender</label>
-                            <select className="form-control" name="gender" value={this.state.gender} onChange={this.handleChange} required>
-                                <option selected>Choose...</option>
-                                <option>0</option>
-                                <option>1</option>
-                            </select>
-                        </div>
-                        <div className="form-group col-md-3">
-                            <label for="chol">Chol</label>
-                            <input type="text" className="form-control" name="chol" value={this.state.chol} onChange={this.handleChange} required></input>
-                        </div>
-                        <div className="form-group col-md-3">
-                            <label for="thalach">Thalach</label>
-                            <input type="text" className="form-control" name="thalach" value={this.state.thalach} onChange={this.handleChange} required></input>
-                        </div>
-                    </div>
 
-                    <div className="form-row">
-                        <div className="form-group col-md-3">
-                            <label for="exang">Exang</label>
-                            <select className="form-control" name="exang" value={this.state.exang} onChange={this.handleChange}required>
-                                <option selected>Choose...</option>
-                                <option>0</option>
-                                <option>1</option>
-                            </select>
+                        <div className="form-row">
+                            <div className="form-group col-md-3">
+                                <label for="exang">Exang</label>
+                                <select className="form-control" name="exang" value={this.state.exang} onChange={this.handleChange}required>
+                                    <option selected>Choose...</option>
+                                    <option>0</option>
+                                    <option>1</option>
+                                </select>
+                            </div>
+                            <div className="form-group col-md-3">
+                                <label for="fbs">Fbs</label>
+                                <select className="form-control" name="fbs" value={this.state.fbs} onChange={this.handleChange}required>
+                                    <option selected>Choose...</option>
+                                    <option>0</option>
+                                    <option>1</option>
+                                </select>
+                            </div>
+                            <div className="form-group col-md-3">
+                                <label for="oldpeak">Oldpeak</label>
+                                <select className="form-control" name="oldpeak" value={this.state.oldpeak} onChange={this.handleChange} required>
+                                    <option selected>Choose...</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                </select>
+                            </div>
+                            <div className="form-group col-md-3">
+                                <label for="restecg">Restecg</label>
+                                <select className="form-control" name="restecg" value={this.state.restecg} onChange={this.handleChange} required>
+                                    <option selected>Choose...</option>
+                                    <option>0</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                </select>
+                            </div>
                         </div>
-                        <div className="form-group col-md-3">
-                            <label for="fbs">Fbs</label>
-                            <select className="form-control" name="fbs" value={this.state.fbs} onChange={this.handleChange}required>
-                                <option selected>Choose...</option>
-                                <option>0</option>
-                                <option>1</option>
-                            </select>
+                        <div className="form-row">
+                            <div className="form-group col-md-3">
+                                <label for="ca">CA</label>
+                                <select className="form-control" name="ca" value={this.state.ca} onChange={this.handleChange}required>
+                                    <option selected>Choose...</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                </select>
+                            </div>
+                            <div className="form-group col-md-3">
+                                <label for="slope">Slope</label>
+                                <select className="form-control" name="slope" value={this.state.slope} onChange={this.handleChange}required>
+                                    <option selected>Choose...</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                </select>
+                            </div>
+                            <div className="form-group col-md-3">
+                                <label for="thal">Thal</label>
+                                <select className="form-control" name="thal" value={this.state.thal} onChange={this.handleChange}required>
+                                    <option selected>Choose...</option>
+                                    <option>3</option>
+                                    <option>6</option>
+                                    <option>7</option>
+                                </select>
+                            </div>
+                            <div className="form-group col-md-3">
+                                <label for="cp">CP</label>
+                                <select className="form-control" name="cp" value={this.state.cp} onChange={this.handleChange}required>
+                                    <option selected>Choose...</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                </select>
+                            </div>
                         </div>
-                        <div className="form-group col-md-3">
-                            <label for="oldpeak">Oldpeak</label>
-                            <select className="form-control" name="oldpeak" value={this.state.oldpeak} onChange={this.handleChange} required>
-                                <option selected>Choose...</option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                            </select>
+                        <div className="form-row">
+                            <div className="form-group col-md-3">
+                                <label for="trestbps">Trestbps</label>
+                                <input type="text" className="form-control" name="trestbps" value={this.state.trestbps} onChange={this.handleChange}required></input>
+                            </div>
                         </div>
-                        <div className="form-group col-md-3">
-                            <label for="restecg">Restecg</label>
-                            <select className="form-control" name="restecg" value={this.state.restecg} onChange={this.handleChange} required>
-                                <option selected>Choose...</option>
-                                <option>0</option>
-                                <option>1</option>
-                                <option>2</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div className="form-row">
-                        <div className="form-group col-md-3">
-                            <label for="ca">CA</label>
-                            <select className="form-control" name="ca" value={this.state.ca} onChange={this.handleChange}required>
-                                <option selected>Choose...</option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                            </select>
-                        </div>
-                        <div className="form-group col-md-3">
-                            <label for="slope">Slope</label>
-                            <select className="form-control" name="slope" value={this.state.slope} onChange={this.handleChange}required>
-                                <option selected>Choose...</option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                            </select>
-                        </div>
-                        <div className="form-group col-md-3">
-                            <label for="thal">Thal</label>
-                            <select className="form-control" name="thal" value={this.state.thal} onChange={this.handleChange}required>
-                                <option selected>Choose...</option>
-                                <option>3</option>
-                                <option>6</option>
-                                <option>7</option>
-                            </select>
-                        </div>
-                        <div className="form-group col-md-3">
-                            <label for="cp">CP</label>
-                            <select className="form-control" name="cp" value={this.state.cp} onChange={this.handleChange}required>
-                                <option selected>Choose...</option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div className="form-row">
-                        <div className="form-group col-md-3">
-                            <label for="trestbps">Trestbps</label>
-                            <input type="text" className="form-control" name="trestbps" value={this.state.trestbps} onChange={this.handleChange}required></input>
-                        </div>
-                    </div>
-                    <PrimaryButton />
-                </form>
+                        <PrimaryButton name="Diagnose"/>
+                    </form>
+                </div>
             </div>
         );
         }

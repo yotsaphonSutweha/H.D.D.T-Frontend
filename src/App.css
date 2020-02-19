@@ -13,3 +13,30 @@ a {
   color: #333;
   text-decoration: none;
 }
+
+.content-wrapper {
+  position: relative;
+  top: 150px;
+}
+
+.user-form {
+  width: 500px;
+  margin: auto;
+  padding: 50px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.patient-detail {
+  text-align: center;
+}
+
+.card-wrapper {
+  margin: 50px 0px;
+  padding: 30px 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+
+.button {
+  padding: 10px 10px;
+}
