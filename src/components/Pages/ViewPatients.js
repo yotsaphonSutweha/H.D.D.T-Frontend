@@ -20,7 +20,7 @@ class ViewPatients extends Component {
         }).then(res => this.setState({ patients: res.data}))
     }
     render () {
-        const title = "Patients page";
+        const title = "Patients";
         return (
             <div>
                 <Navbar />

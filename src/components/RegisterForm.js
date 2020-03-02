@@ -55,6 +55,9 @@ class RegisterForm extends Component {
                         </div>
                     </div>
                     <PrimaryButton name = "Register"/>
+                    <div className="register-login-space">
+                        <p>Already have an account? <a href="/login" style={{color:"blue"}}>Log In</a></p>
+                    </div>
                 </form>
             </div>
         </div>

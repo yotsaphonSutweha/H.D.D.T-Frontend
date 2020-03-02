@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import qs from 'query-string';
 import axios from 'axios';
 import Loading from '../layout/Loading';
-import PrimaryButton from '../layout/PrimaryBotton';
 import Navbar from '../layout/Navbar';
-
+import CancelButton from '../layout/CancelBotton';
+import SuccessAlert from '../layout/SuccessAlert';
 
 class ConditionVisualisation extends Component {
     constructor(props) {
@@ -38,6 +38,7 @@ class ConditionVisualisation extends Component {
             selectedYAxis: '',
             x : '',
             severity : '',
+            severityAssigned: false,
             source : null
         }
         this.handleChangeX = this.handleChangeX.bind(this);
@@ -49,6 +50,7 @@ class ConditionVisualisation extends Component {
         this.getSelectedYAxis = this.getSelectedYAxis.bind(this);
         this.handleAssign = this.handleAssign.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.convertValuesBackToOriginal = this.convertValuesBackToOriginal.bind(this);
     }
 
     handleChangeX(event) {
@@ -65,88 +67,88 @@ class ConditionVisualisation extends Component {
     }
 
     selectXValue() {
-        switch(this.state.selectedXAxis !== '....') {
-            case this.state.selectedXAxis.toLowerCase() === 'age':
+        switch(this.state.selectedXAxis !== 'Choose...') {
+            case this.state.selectedXAxis === 'Age':
                 return this.state.age;
                 break;
-            case this.state.selectedXAxis.toLowerCase() === 'gender':
+            case this.state.selectedXAxis === 'Gender':
                 return this.state.sex;
                 break;
-            case this.state.selectedXAxis.toLowerCase() === 'cp':
+            case this.state.selectedXAxis === 'Chest-pain Type':
                 return this.state.cp;
                 break;
-            case this.state.selectedXAxis.toLowerCase() === 'trestbps':
+            case this.state.selectedXAxis === 'Resting Blood Pressure':
                 return this.state.trestbps;
                 break;
-            case this.state.selectedXAxis.toLowerCase() === 'chol':
+            case this.state.selectedXAxis === 'Serum Cholesterol':
                 return this.state.chol;
                 break;
-            case this.state.selectedXAxis.toLowerCase() === 'fbs':
+            case this.state.selectedXAxis === 'Fasting Blood Sugar':
                 return this.state.fbs;
                 break;
-            case this.state.selectedXAxis.toLowerCase() === 'restecg':
+            case this.state.selectedXAxis === 'Resting Electrocardiographic Result':
                 return this.state.restecg;
                 break;    
-            case this.state.selectedXAxis.toLowerCase() === 'thalach':
+            case this.state.selectedXAxis === 'Maximum Heart Rate Achieved':
                 return this.state.thalach;
                 break;
-            case this.state.selectedXAxis.toLowerCase() === 'exang':
+            case this.state.selectedXAxis === 'Exercise Induced Agina':
                 return this.state.exang;
                 break;
-            case this.state.selectedXAxis.toLowerCase() === 'oldpeak':
+            case this.state.selectedXAxis === 'ST Dpression Induced':
                 return this.state.oldpeak;
                 break;
-            case this.state.selectedXAxis.toLowerCase() === 'slope':
+            case this.state.selectedXAxis === 'Slope of Peak Exercise ST Segment':
                 return this.state.slope;
                 break;
-            case this.state.selectedXAxis.toLowerCase() === 'ca':
+            case this.state.selectedXAxis === 'Number of Major Vessels':
                 return this.state.ca;
                 break;
-            case this.state.selectedXAxis.toLowerCase() === 'thal':
+            case this.state.selectedXAxis === 'Thalassemia':
                 return this.state.thal;
                 break;
         }
     }
 
     selectYValue() {
-        switch(this.state.selectedYAxis !== '....') {
-            case this.state.selectedYAxis.toLowerCase() === 'age':
+        switch(this.state.selectedYAxis !== 'Choose...') {
+            case this.state.selectedYAxis === 'Age':
                 return this.state.age;
                 break;
-            case this.state.selectedYAxis.toLowerCase() === 'gender':
+            case this.state.selectedYAxis === 'Gender':
                 return this.state.sex;
                 break;
-            case this.state.selectedYAxis.toLowerCase() === 'cp':
+            case this.state.selectedYAxis === 'Chest-pain Type':
                 return this.state.cp;
                 break;
-            case this.state.selectedYAxis.toLowerCase() === 'trestbps':
+            case this.state.selectedYAxis === 'Resting Blood Pressure':
                 return this.state.trestbps;
                 break;
-            case this.state.selectedYAxis.toLowerCase() === 'chol':
+            case this.state.selectedYAxis === 'Serum Cholesterol':
                 return this.state.chol;
                 break;
-            case this.state.selectedYAxis.toLowerCase() === 'fbs':
+            case this.state.selectedYAxis === 'Fasting Blood Sugar':
                 return this.state.fbs;
                 break;
-            case this.state.selectedYAxis.toLowerCase() === 'restecg':
+            case this.state.selectedYAxis === 'Resting Electrocardiographic Result':
                 return this.state.restecg;
                 break;    
-            case this.state.selectedYAxis.toLowerCase() === 'thalach':
+            case this.state.selectedYAxis === 'Maximum Heart Rate Achieved':
                 return this.state.thalach;
                 break;
-            case this.state.selectedYAxis.toLowerCase() === 'exang':
+            case this.state.selectedYAxis === 'Exercise Induced Agina':
                 return this.state.exang;
                 break;
-            case this.state.selectedYAxis.toLowerCase() === 'oldpeak':
+            case this.state.selectedYAxis === 'ST Dpression Induced':
                 return this.state.oldpeak;
                 break;
-            case this.state.selectedYAxis.toLowerCase() === 'slope':
+            case this.state.selectedYAxis === 'Slope of Peak Exercise ST Segment':
                 return this.state.slope;
                 break;
-            case this.state.selectedYAxis.toLowerCase() === 'ca':
+            case this.state.selectedYAxis === 'Number of Major Vessels':
                 return this.state.ca;
                 break;
-            case this.state.selectedYAxis.toLowerCase() === 'thal':
+            case this.state.selectedYAxis === 'Thalassemia':
                 return this.state.thal;
                 break;
         }
@@ -186,19 +188,61 @@ class ConditionVisualisation extends Component {
                 patientId: this.state.patientId
             }
         }).then(res => {
-            console.log(res.data);
+            this.setState({severityAssigned: true})
         });
+    }
+
+    convertValuesBackToOriginal(value) {
+        switch(value !== null ) {
+            case value === 'Age':
+                return 'age';
+                break;
+            case value === 'Gender':
+                return 'sex';
+                break;
+            case value === 'Chest-pain Type':
+                return 'cp';
+                break;
+            case value === 'Resting Blood Pressure':
+                return 'trestbps';
+                break;
+            case value === 'Serum Cholesterol':
+                return 'chol';
+                break;
+            case value === 'Fasting Blood Sugar':
+                return 'fbs';
+                break;
+            case value === 'Resting Electrocardiographic Result':
+                return 'restecg';
+                break;    
+            case value === 'Maximum Heart Rate Achieved':
+                return  'thalach';
+                break;
+            case value === 'Exercise Induced Agina':
+                return 'exang';
+                break;
+            case value === 'ST Dpression Induced':
+                return 'oldpeak';
+                break;
+            case value === 'Slope of Peak Exercise ST Segment':
+                return 'slope';
+                break;
+            case value === 'Number of Major Vessels':
+                return 'ca';
+                break;
+            case value === 'Thalassemia':
+                return 'thal';
+                break;
+        }
     }
 
     handleSubmit(event) {
         event.preventDefault();
         let xAxiValue = this.selectXValue();
         let yAxisValue = this.selectYValue();
-        let xAttrName = this.getSelectedXAxis().toLowerCase();
-        let yAttrName = this.getSelectedYAxis().toLowerCase();
+        let xAttrName = this.convertValuesBackToOriginal(this.getSelectedXAxis());
+        let yAttrName = this.convertValuesBackToOriginal(this.getSelectedYAxis());
         let diagnosis = this.state.diagnosis;
-        xAttrName == 'gender' ? xAttrName = 'sex' : xAttrName = xAttrName
-        yAttrName == 'gender' ? yAttrName = 'sex' : yAttrName = yAttrName
         axios({
             headers : {
                 'Content-Type': 'application/json',
@@ -268,9 +312,7 @@ class ConditionVisualisation extends Component {
             return (
                 <div>
                 <Navbar />
-                    <div class="container">
-                        <Loading />
-                    </div>
+                    <Loading />
                 </div>
             );
         } else {
@@ -278,23 +320,16 @@ class ConditionVisualisation extends Component {
             return(
                 <div>
                     <Navbar />
-                    <div class="container">
-                        <div>
-                            <p>{this.state.age}</p>
-                            <p>{this.state.ca}</p>
-                            <p>{this.state.chol}</p>
-                            <p>{this.state.cp}</p>
-                            <p>{this.state.exang}</p>
-                            <p>{this.state.fbs}</p>
-                            <p>{this.state.oldpeak}</p>
-                            <p>{this.state.restecg}</p>
-                            <p>{this.state.sex}</p>
-                            <p>{this.state.thal}</p>
-                            <p>{this.state.thalach}</p>
-                            <p>{this.state.trestbps}</p>
-                            <p>{this.state.diagnose}</p>
+                    <div className="container">
+                        <div className="heading">
+                            <h3>{this.state.firstName} {this.state.secondName}</h3>
                         </div>
-                        <img src={this.state.source}/>
+                        {this.state.severityAssigned === true ? <SuccessAlert message="Severity has been assigned successfully! Patient is added to the operation awaiting list."/> : null}
+                        <div className="row">
+                            <div className="img-area diagnosis-img">
+                                <img src={this.state.source} />
+                            </div>
+                        </div>
                         <div className="severity-from-wrapper">
                             <form>
                                 <div className="form-row align-items-center">
@@ -312,45 +347,48 @@ class ConditionVisualisation extends Component {
                         <form>
                             <div class="form-row">
                                 <div class="form-group col-lg-6">
-                                    <label for="condition1">Condition number 1: X axis</label>
+                                    <label for="condition1">Medical Condition 1: X axis</label>
                                     <select class="form-control" id="condition1" value={this.state.selectedXAxis} onChange={this.handleChangeX}>
-                                        <option>....</option>
+                                        <option>Choose...</option>
                                         <option>Age</option>
-                                        <option>Ca</option>
-                                        <option>Chol</option>
-                                        <option>Cp</option>
-                                        <option>Exang</option>
-                                        <option>Fbs</option>
-                                        <option>Oldpeak</option>
-                                        <option>Restecg</option>
+                                        <option>Number of Major Vessels</option>
+                                        <option>Serum Cholesterol</option>
+                                        <option>Chest-pain Type</option>
+                                        <option>Exercise Induced Agina</option>
+                                        <option>Fasting Blood Sugar</option>
+                                        <option>ST Dpression Induced</option>
+                                        <option>Resting Electrocardiographic Result</option>
                                         <option>Gender</option>
-                                        <option>Thal</option>
-                                        <option>Thalach</option>
-                                        <option>Trestbps</option>
+                                        <option>Thalassemia</option>
+                                        <option>Maximum Heart Rate Achieved</option>
+                                        <option>Resting Blood Pressure</option>
+                                        <option>Slope of Peak Exercise ST Segment</option>
                                     </select>
                                     </div>
                                     <div class="form-group col-lg-6">
-                                    <label for="condition2">Condition number 2: Y axis</label>
+                                    <label for="condition2">Medical Condition 2: Y axis</label>
                                     <select class="form-control" id="condition2" value={this.state.selectedYAxis} onChange={this.handleChangeY}>
-                                        <option>....</option>
+                                        <option>Choose...</option>
                                         <option>Age</option>
-                                        <option>Ca</option>
-                                        <option>Chol</option>
-                                        <option>Cp</option>
-                                        <option>Exang</option>
-                                        <option>Fbs</option>
-                                        <option>Oldpeak</option>
-                                        <option>Restecg</option>
+                                        <option>Number of Major Vessels</option>
+                                        <option>Serum Cholesterol</option>
+                                        <option>Chest-pain Type</option>
+                                        <option>Exercise Induced Agina</option>
+                                        <option>Fasting Blood Sugar</option>
+                                        <option>ST Dpression Induced</option>
+                                        <option>Resting Electrocardiographic Result</option>
                                         <option>Gender</option>
-                                        <option>Thal</option>
-                                        <option>Thalach</option>
-                                        <option>Trestbps</option>
+                                        <option>Thalassemia</option>
+                                        <option>Maximum Heart Rate Achieved</option>
+                                        <option>Resting Blood Pressure</option>
+                                        <option>Slope of Peak Exercise ST Segment</option>
                                     </select>
                                 </div>
                             </div>
                             <button type="submit" className="btn btn-secondary" onClick={e => this.handleSubmit(e)}>
                             Generate
                             </button>
+                            <CancelButton />
                         </form>
                     </div>
                 </div>

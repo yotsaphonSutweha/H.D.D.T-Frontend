@@ -3,6 +3,8 @@ import PrimaryButton from './layout/PrimaryBotton';
 import Result from './Results';
 import axios from 'axios';
 import Header from './layout/Header';
+import CancelButton from './layout/CancelBotton';
+import DangerAlert from './layout/DangerAlert';
 class DiagnosePatientForm extends Component {
     constructor(props) {
         super(props)
@@ -29,15 +31,94 @@ class DiagnosePatientForm extends Component {
             ca: '',
             thal: '',
             completedDiagnosis: false,
-            results: {}
+            results: {},
+            inputError: false,
+            errorMessage: ''
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.convertResrecg = this.convertResrecg.bind(this);
+        this.convertSlope = this.convertSlope.bind(this);
+        this.convertCp = this.convertCp.bind(this);
+        this.convertThal = this.convertThal.bind(this);
+        this.checkIfValueIsInteger = this.checkIfValueIsInteger.bind(this);
     }
 
     handleChange(event) {
         const target = event.target;
         this.setState({[target.name] : target.value});
+    }
+
+    checkIfValueIsInteger(value) {
+        if (typeof value === 'number') {
+            return true;
+        } 
+        else {
+            return false;
+        }
+    }
+
+    convertCp(value) {
+        if (value === 'Typical anginal') {
+            return 1;
+        }
+        else if (value === 'Atypical anginal') {
+            return 2;
+        }
+        else if (value === 'Non-anginal pain') {
+            return 3;
+        }
+        else if (value === 'Asymptotic') {
+            return 4;
+        }
+        else {
+            this.setState({inputError: true});
+        }
+    }
+
+    convertThal(value) {
+        if (value === 'Normal') {
+            return 3;
+        }
+        else if (value === 'Fixed defect') {
+            return 6;
+        }
+        else if (value === 'Reversible defect') {
+            return 7;
+        }
+        else {
+            this.setState({inputError: true});
+        }
+    }
+
+    convertSlope(value) {
+        if (value === 'Upsloping') {
+            return 1;
+        } 
+        else if (value === 'Flat') {
+            return 2;
+        }
+        else if (value === 'Downsloping') {
+            return 3;
+        }
+        else {
+            this.setState({inputError: true});
+        }
+    }
+
+    convertResrecg(value) {
+        if (value === 'Normal') {
+            return 0;
+        }
+        else if (value === 'ST-T wave abnormality') {
+            return 1;
+        }
+        else if (value === 'Left ventricular hyperthrophy') {
+            return 2;
+        }
+        else {
+            this.setState({inputError: true});
+        }
     }
 
     handleSubmit(event) {
@@ -61,26 +142,30 @@ class DiagnosePatientForm extends Component {
                 next_of_kin2_first_name:  this.state.nextOfKin2FirstName,
                 next_of_kin2_second_name: this.state.nextOfKin2SecondName,
                 age: this.state.age,
-                gender: this.state.gender,
-                cp: this.state.cp,
+                gender: this.state.gender == "Male" ? 1 : 0,
+                cp: this.convertCp(this.state.cp),
                 trestbps: this.state.trestbps,
                 chol: this.state.chol,
-                fbs: this.state.fbs,
-                restecg: this.state.restecg,
+                fbs: this.state.fbs == "Yes" ? 1 : 0,
+                restecg: this.convertResrecg(this.state.restecg),
                 thalach: this.state.thalach,
-                exang: this.state.exang,
+                exang: this.state.exang == "Yes" ? 1 : 0,
                 oldpeak: this.state.oldpeak,
-                slope: this.state.slope,
+                slope: this.convertSlope(this.state.slope),
                 ca: this.state.ca,
-                thal: this.state.thal
+                thal: this.convertThal(this.state.thal)
             }
         }).then(res => {
-            console.log(this.state.completedDiagnosis)
+            console.log(res.data)
             this.setState({
                 completedDiagnosis : true,
                 results : res.data
+            }) 
+        }).catch(error => {
+            console.log(error);
+            this.setState({
+                inputError : true
             });
-            console.log(this.state.completedDiagnosis)
         });
 
     }
@@ -94,6 +179,7 @@ class DiagnosePatientForm extends Component {
         return (
             <div className="container">
                 <Header title="Diagnose Patient"/>
+                {this.state.inputError === true ? <DangerAlert message="Please provide appropriate input"/> : null}
                 <div className="card-wrapper">
                     <form onSubmit={this.handleSubmit}>
                         <div className="form-row">
@@ -145,39 +231,39 @@ class DiagnosePatientForm extends Component {
                                 <label for="gender">Gender</label>
                                 <select className="form-control" name="gender" value={this.state.gender} onChange={this.handleChange} required>
                                     <option selected>Choose...</option>
-                                    <option>0</option>
-                                    <option>1</option>
+                                    <option>Female</option>
+                                    <option>Male</option>
                                 </select>
                             </div>
                             <div className="form-group col-md-3">
-                                <label for="chol">Chol</label>
+                                <label for="chol">Serum Cholestrol in mg/dl</label>
                                 <input type="text" className="form-control" name="chol" value={this.state.chol} onChange={this.handleChange} required></input>
                             </div>
                             <div className="form-group col-md-3">
-                                <label for="thalach">Thalach</label>
+                                <label for="thalach">Maximum Heart Rate Achieved</label>
                                 <input type="text" className="form-control" name="thalach" value={this.state.thalach} onChange={this.handleChange} required></input>
                             </div>
                         </div>
 
                         <div className="form-row">
                             <div className="form-group col-md-3">
-                                <label for="exang">Exang</label>
+                                <label for="exang">Exercise Induced Agina</label>
                                 <select className="form-control" name="exang" value={this.state.exang} onChange={this.handleChange}required>
                                     <option selected>Choose...</option>
-                                    <option>0</option>
-                                    <option>1</option>
+                                    <option>Yes</option>
+                                    <option>No</option>
                                 </select>
                             </div>
                             <div className="form-group col-md-3">
-                                <label for="fbs">Fbs</label>
+                                <label for="fbs">Fasting Blood Sugar (>120mg/dl)</label>
                                 <select className="form-control" name="fbs" value={this.state.fbs} onChange={this.handleChange}required>
                                     <option selected>Choose...</option>
-                                    <option>0</option>
-                                    <option>1</option>
+                                    <option>Yes</option>
+                                    <option>No</option>
                                 </select>
                             </div>
                             <div className="form-group col-md-3">
-                                <label for="oldpeak">Oldpeak</label>
+                                <label for="oldpeak">ST Depression Induced</label>
                                 <select className="form-control" name="oldpeak" value={this.state.oldpeak} onChange={this.handleChange} required>
                                     <option selected>Choose...</option>
                                     <option>1</option>
@@ -186,18 +272,18 @@ class DiagnosePatientForm extends Component {
                                 </select>
                             </div>
                             <div className="form-group col-md-3">
-                                <label for="restecg">Restecg</label>
+                                <label for="restecg">Resting Electrocardiographic Result</label>
                                 <select className="form-control" name="restecg" value={this.state.restecg} onChange={this.handleChange} required>
                                     <option selected>Choose...</option>
-                                    <option>0</option>
-                                    <option>1</option>
-                                    <option>2</option>
+                                    <option>Normal</option>
+                                    <option>ST-T wave abnormality</option>
+                                    <option>Left ventricular hyperthrophy</option>
                                 </select>
                             </div>
                         </div>
                         <div className="form-row">
                             <div className="form-group col-md-3">
-                                <label for="ca">CA</label>
+                                <label for="ca">Number of Major Vessels</label>
                                 <select className="form-control" name="ca" value={this.state.ca} onChange={this.handleChange}required>
                                     <option selected>Choose...</option>
                                     <option>1</option>
@@ -206,41 +292,42 @@ class DiagnosePatientForm extends Component {
                                 </select>
                             </div>
                             <div className="form-group col-md-3">
-                                <label for="slope">Slope</label>
+                                <label for="slope">Slope of Peak Exercise ST Segment</label>
                                 <select className="form-control" name="slope" value={this.state.slope} onChange={this.handleChange}required>
                                     <option selected>Choose...</option>
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
+                                    <option>Upsloping</option>
+                                    <option>Flat</option>
+                                    <option>Downsloping</option>
                                 </select>
                             </div>
                             <div className="form-group col-md-3">
-                                <label for="thal">Thal</label>
+                                <label for="thal">Thalassemia</label>
                                 <select className="form-control" name="thal" value={this.state.thal} onChange={this.handleChange}required>
                                     <option selected>Choose...</option>
-                                    <option>3</option>
-                                    <option>6</option>
-                                    <option>7</option>
+                                    <option>Normal</option>
+                                    <option>Fixed defect</option>
+                                    <option>Reversible defect</option>
                                 </select>
                             </div>
                             <div className="form-group col-md-3">
-                                <label for="cp">CP</label>
+                                <label for="cp">Chest-pain Type</label>
                                 <select className="form-control" name="cp" value={this.state.cp} onChange={this.handleChange}required>
                                     <option selected>Choose...</option>
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
+                                    <option>Typical anginal</option>
+                                    <option>Atypical anginal</option>
+                                    <option>Non-anginal pain</option>
+                                    <option>Asymptotic</option>
                                 </select>
                             </div>
                         </div>
                         <div className="form-row">
                             <div className="form-group col-md-3">
-                                <label for="trestbps">Trestbps</label>
+                                <label for="trestbps">Resting Blood Pressure in mmHg</label>
                                 <input type="text" className="form-control" name="trestbps" value={this.state.trestbps} onChange={this.handleChange}required></input>
                             </div>
                         </div>
                         <PrimaryButton name="Diagnose"/>
+                        <CancelButton />
                     </form>
                 </div>
             </div>

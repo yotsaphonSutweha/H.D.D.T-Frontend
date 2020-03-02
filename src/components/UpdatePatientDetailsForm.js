@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import Loading from './layout/Loading';
-import UpdateButton from './layout/SecondaryButton';
 import axios from 'axios';
 import Header from './layout/Header';
+import CancelButton from './layout/CancelBotton';
+import { Redirect } from 'react-router-dom';
+import SuccessAlert from './layout/SuccessAlert';
+
 class UpdatePatientDetailsForm extends Component {
     constructor(props) {
         super(props)
@@ -34,11 +36,18 @@ class UpdatePatientDetailsForm extends Component {
         };
         this.handleChange = this.handleChange.bind(this);
         this.handlePatientUpdate = this.handlePatientUpdate.bind(this);
+        this.refreshThePage = this.refreshThePage.bind(this);
     }
 
     handleChange(event) {
         const target = event.target;
         this.setState({[target.name] : target.value});
+    }
+
+    refreshThePage() {
+        if(this.state.completedUpdate === true) {
+            window.location.reload(false);
+        }
     }
 
     componentDidMount() {
@@ -75,10 +84,7 @@ class UpdatePatientDetailsForm extends Component {
                 next_of_kin2_second_name: this.state.nextOfKin2SecondName,
             }
         }).then(res => {
-            this.setState({
-                completedUpdate : true,
-            });
-            console.log(res.data)
+            res.data.status === 200 ? this.setState({completedUpdate : true}) : this.setState({completedUpdate : false});
         });
     }
 
@@ -86,6 +92,7 @@ class UpdatePatientDetailsForm extends Component {
             return (
                 <div className="container">
                 <Header title="Edit details"/>
+                {this.state.completedUpdate === true ? this.refreshThePage(): null }
                 <div className="card-wrapper">
                     <form onSubmit={this.handleSubmit}>
                         <div className="form-row">
@@ -236,11 +243,11 @@ class UpdatePatientDetailsForm extends Component {
                         <button type="submit" className="btn btn-secondary" onClick={e => this.handlePatientUpdate(e)}>
                             Update
                         </button>
+                        <CancelButton />
                     </form>
                 </div>
             </div>
             );
-        
     }
 }
 

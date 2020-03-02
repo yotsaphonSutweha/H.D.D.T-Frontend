@@ -7,16 +7,18 @@ class LoginForm extends Component {
                  <div class="content-wrapper user-form">
                     <form method="POST" action={process.env.REACT_APP_SERVER_SIDE_URL + "login"}>
                         <div className="form-group">
-                            <label for="doctorId">Doctor ID</label>
+                            <label for="doctorId">Employee ID</label>
                             <input type="text" className="form-control" name="doctorId"/>
                         </div>
                         <div className="form-group">
                             <label for="password">Password</label>
                             <input type="password" className="form-control" name="password"/>
                         </div>
-                        <PrimaryButton name="Sign In" />
-                        <a href="/register">Need to sign up?</a>
+                        <PrimaryButton name="Log In" />
                     </form>
+                    <div className="register-login-space">
+                        <p>No account?  <a href="/register" style={{color:"blue"}}>Register</a></p>
+                    </div>
                 </div>
             </div>
         );

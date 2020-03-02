@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Loading from './layout/Loading';
-
+import CancelButton from './layout/CancelBotton';
 class PatientDetails extends Component {
     render () {
         if (this.props.patientDetails.medical_data === undefined) {
@@ -13,7 +13,7 @@ class PatientDetails extends Component {
             return (
                 <div className="container">
                     <div className="card-wrapper">
-                        <h4>Personal details</h4>
+                        <h4>Personal Information</h4>
                         <div className="row">
                             <div className="col-lg-3">
                                 <p>First name: {this.props.patientDetails.first_name}</p>
@@ -48,7 +48,7 @@ class PatientDetails extends Component {
                                 <p>First name: {this.props.patientDetails.next_of_kin2_second_name}</p>
                             </div>
                         </div>
-                        <h4>Medial details</h4>
+                        <h4>Medical Infomration</h4>
                         <div className="form-row">
                                 <div className="form-group col-md-3">
                                     <p>Age: {this.props.patientDetails.medical_data.age}</p>
@@ -97,6 +97,7 @@ class PatientDetails extends Component {
                                 </div>
                             </div>
                         <a href={'condition-visualisation?id=' + this.props.patientDetails._id.$oid} className="btn btn-primary">Visualise condition</a>
+                        <CancelButton/>
                     </div>
                 </div>
             );

@@ -20,7 +20,7 @@ class ViewPatientsWithSeverity extends Component {
         }).then(res => this.setState({patients : res.data}))
     }
     render () {
-        const title = "Patients page";
+        const title = "Opeartion Awaiting List";
         return (
             <div>
                 <Navbar />
