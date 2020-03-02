@@ -3,13 +3,24 @@ import qs from 'query-string';
 import axios from 'axios';
 import Loading from '../layout/Loading';
 import PrimaryButton from '../layout/PrimaryBotton';
+import Navbar from '../layout/Navbar';
+
 
 class ConditionVisualisation extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            patientId: '',
+            firstName : '',
+            secondName : '',
+            address: '',
+            contactNumber: '',
+            nextOfKin1FirstName: '',
+            nextOfKin1SecondName : '',
+            nextOfKin2FirstName: '',
+            nextOfKin2SecondName : '',
             age: '',
-            gender: '',
+            sex: '',
             cp: '',
             trestbps: '',
             chol: '',
@@ -25,7 +36,9 @@ class ConditionVisualisation extends Component {
             severity: '',
             selectedXAxis: '',
             selectedYAxis: '',
-            x : ''
+            x : '',
+            severity : '',
+            source : null
         }
         this.handleChangeX = this.handleChangeX.bind(this);
         this.handleChangeY = this.handleChangeY.bind(this);
@@ -34,6 +47,8 @@ class ConditionVisualisation extends Component {
         this.selectYValue = this.selectYValue.bind(this);
         this.getSelectedXAxis = this.getSelectedXAxis.bind(this);
         this.getSelectedYAxis = this.getSelectedYAxis.bind(this);
+        this.handleAssign = this.handleAssign.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
     handleChangeX(event) {
@@ -50,12 +65,12 @@ class ConditionVisualisation extends Component {
     }
 
     selectXValue() {
-        switch(this.state.selectedXAxis !== '') {
+        switch(this.state.selectedXAxis !== '....') {
             case this.state.selectedXAxis.toLowerCase() === 'age':
                 return this.state.age;
                 break;
             case this.state.selectedXAxis.toLowerCase() === 'gender':
-                return this.state.gender;
+                return this.state.sex;
                 break;
             case this.state.selectedXAxis.toLowerCase() === 'cp':
                 return this.state.cp;
@@ -94,12 +109,12 @@ class ConditionVisualisation extends Component {
     }
 
     selectYValue() {
-        switch(this.state.selectedYAxis !== '') {
+        switch(this.state.selectedYAxis !== '....') {
             case this.state.selectedYAxis.toLowerCase() === 'age':
                 return this.state.age;
                 break;
             case this.state.selectedYAxis.toLowerCase() === 'gender':
-                return this.state.gender;
+                return this.state.sex;
                 break;
             case this.state.selectedYAxis.toLowerCase() === 'cp':
                 return this.state.cp;
@@ -149,20 +164,48 @@ class ConditionVisualisation extends Component {
         }
     }
 
+    handleChange(event) {
+        const target = event.target;
+        this.setState({[target.name] : target.value})
+    }
+
+    handleAssign(event) {
+        event.preventDefault();
+        console.log(this.state.patientId)
+        axios({
+            headers : {
+                'Content-Type' : 'application/json',
+                'Access-Control-Allow-Origin' : '*',
+                'Access-Control-Allow-Credentials' : true
+            },
+            method : 'POST',
+            url: process.env.REACT_APP_SERVER_SIDE_URL + 'api/assign-severity',
+            withCredentials : true,
+            data: {
+                severity: this.state.severity,
+                patientId: this.state.patientId
+            }
+        }).then(res => {
+            console.log(res.data);
+        });
+    }
+
     handleSubmit(event) {
         event.preventDefault();
         let xAxiValue = this.selectXValue();
         let yAxisValue = this.selectYValue();
         let xAttrName = this.getSelectedXAxis().toLowerCase();
         let yAttrName = this.getSelectedYAxis().toLowerCase();
-        console.log(xAttrName)
-        console.log(yAttrName)
+        let diagnosis = this.state.diagnosis;
+        xAttrName == 'gender' ? xAttrName = 'sex' : xAttrName = xAttrName
+        yAttrName == 'gender' ? yAttrName = 'sex' : yAttrName = yAttrName
         axios({
             headers : {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Credentials': true
             },
+            responseType : 'arraybuffer', 
             method : 'POST',
             url: process.env.REACT_APP_SERVER_SIDE_URL + 'api/condition-visualisation',
             withCredentials: true,
@@ -170,16 +213,16 @@ class ConditionVisualisation extends Component {
                 xValue : xAxiValue,
                 xAttr : xAttrName,
                 yValue : yAxisValue,
-                yAttr : yAttrName
+                yAttr : yAttrName,
+                diagnosis : diagnosis
             }
         }).then(res => {
-            console.log(res.data)
-            var base64Icon = 'data:image/png;base64,' + res.data;
-            this.state.x = base64Icon;
-            // this.setState({
-            //     completedDiagnosis : true,
-            //     results : res.data
-            // });
+            const base64 = btoa(new Uint8Array(res.data).reduce(
+                (data, byte) => data + String.fromCharCode(byte),
+                '',
+                ),
+            );
+            this.setState({ source: "data:;base64," + base64 });
         });
     }
 
@@ -194,8 +237,17 @@ class ConditionVisualisation extends Component {
             url: process.env.REACT_APP_SERVER_SIDE_URL + 'api/patient?id=' + parsedQuery.id,
             withCredentials: true,
         }).then(res => this.setState({ 
+            patientId: res.data._id['$oid'],
+            firstName: res.data.first_name,
+            secondName: res.data.second_name,
+            contactNumber: res.data.contact_number,
+            address: res.data.address,
+            nextOfKin1FirstName: res.data.next_of_kin1_first_name,
+            nextOfKin1SecondName: res.data.next_of_kin1_second_name,
+            nextOfKin2FirstName:  res.data.next_of_kin2_first_name,
+            nextOfKin2SecondName: res.data.next_of_kin2_second_name,
             age: res.data.medical_data.age,
-            gender: res.data.medical_data.sex,
+            sex: res.data.medical_data.sex,
             cp: res.data.medical_data.cp,
             trestbps: res.data.medical_data.trestbps,
             chol: res.data.medical_data.chol,
@@ -214,68 +266,93 @@ class ConditionVisualisation extends Component {
     render() {
         if (this.state.age === '' && this.state.x === '') {
             return (
-                <Loading />
+                <div>
+                <Navbar />
+                    <div class="container">
+                        <Loading />
+                    </div>
+                </div>
             );
         } else {
+            console.log(this.state)
             return(
-                <div class="container">
-                    <image source={{uri: this.state.x}}/>
-                    <div>
-                        <p>{this.state.age}</p>
-                        <p>{this.state.ca}</p>
-                        <p>{this.state.chol}</p>
-                        <p>{this.state.cp}</p>
-                        <p>{this.state.exang}</p>
-                        <p>{this.state.fbs}</p>
-                        <p>{this.state.oldpeak}</p>
-                        <p>{this.state.restecg}</p>
-                        <p>{this.state.sex}</p>
-                        <p>{this.state.thal}</p>
-                        <p>{this.state.thalach}</p>
-                        <p>{this.state.trestbps}</p>
-                        <p>{this.state.diagnose}</p>
-                    </div>
-                    <form>
-                        <div class="form-row">
-                            <div class="form-group col-lg-6">
-                                <label for="condition1">Condition number 1: X axis</label>
-                                <select class="form-control" id="condition1" value={this.state.selectedXAxis} onChange={this.handleChangeX}>
-                                    <option>Age</option>
-                                    <option>Ca</option>
-                                    <option>Chol</option>
-                                    <option>Cp</option>
-                                    <option>Exang</option>
-                                    <option>Fbs</option>
-                                    <option>Oldpeak</option>
-                                    <option>Restecg</option>
-                                    <option>Gender</option>
-                                    <option>Thal</option>
-                                    <option>Thalach</option>
-                                    <option>Trestbps</option>
-                                </select>
-                                </div>
-                                <div class="form-group col-lg-6">
-                                <label for="condition2">Condition number 2: Y axis</label>
-                                <select class="form-control" id="condition2" value={this.state.selectedYAxis} onChange={this.handleChangeY}>
-                                <option>Age</option>
-                                    <option>Ca</option>
-                                    <option>Chol</option>
-                                    <option>Cp</option>
-                                    <option>Exang</option>
-                                    <option>Fbs</option>
-                                    <option>Oldpeak</option>
-                                    <option>Restecg</option>
-                                    <option>Gender</option>
-                                    <option>Thal</option>
-                                    <option>Thalach</option>
-                                    <option>Trestbps</option>
-                                </select>
-                            </div>
+                <div>
+                    <Navbar />
+                    <div class="container">
+                        <div>
+                            <p>{this.state.age}</p>
+                            <p>{this.state.ca}</p>
+                            <p>{this.state.chol}</p>
+                            <p>{this.state.cp}</p>
+                            <p>{this.state.exang}</p>
+                            <p>{this.state.fbs}</p>
+                            <p>{this.state.oldpeak}</p>
+                            <p>{this.state.restecg}</p>
+                            <p>{this.state.sex}</p>
+                            <p>{this.state.thal}</p>
+                            <p>{this.state.thalach}</p>
+                            <p>{this.state.trestbps}</p>
+                            <p>{this.state.diagnose}</p>
                         </div>
-                        <button type="submit" className="btn btn-secondary" onClick={e => this.handleSubmit(e)}>
-                        Generate
-                        </button>
-                    </form>
+                        <img src={this.state.source}/>
+                        <div className="severity-from-wrapper">
+                            <form>
+                                <div className="form-row align-items-center">
+                                    <div className="col-lg-2">
+                                        <input className="form-control" placeholder="Severity" name="severity" value={this.state.severity} onChange={this.handleChange}></input>
+                                    </div>
+                                    <div className="col-lg-2">
+                                        <button type="submit" className="btn btn-secondary" onClick={e => this.handleAssign(e)}>
+                                            Assign
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <form>
+                            <div class="form-row">
+                                <div class="form-group col-lg-6">
+                                    <label for="condition1">Condition number 1: X axis</label>
+                                    <select class="form-control" id="condition1" value={this.state.selectedXAxis} onChange={this.handleChangeX}>
+                                        <option>....</option>
+                                        <option>Age</option>
+                                        <option>Ca</option>
+                                        <option>Chol</option>
+                                        <option>Cp</option>
+                                        <option>Exang</option>
+                                        <option>Fbs</option>
+                                        <option>Oldpeak</option>
+                                        <option>Restecg</option>
+                                        <option>Gender</option>
+                                        <option>Thal</option>
+                                        <option>Thalach</option>
+                                        <option>Trestbps</option>
+                                    </select>
+                                    </div>
+                                    <div class="form-group col-lg-6">
+                                    <label for="condition2">Condition number 2: Y axis</label>
+                                    <select class="form-control" id="condition2" value={this.state.selectedYAxis} onChange={this.handleChangeY}>
+                                        <option>....</option>
+                                        <option>Age</option>
+                                        <option>Ca</option>
+                                        <option>Chol</option>
+                                        <option>Cp</option>
+                                        <option>Exang</option>
+                                        <option>Fbs</option>
+                                        <option>Oldpeak</option>
+                                        <option>Restecg</option>
+                                        <option>Gender</option>
+                                        <option>Thal</option>
+                                        <option>Thalach</option>
+                                        <option>Trestbps</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="submit" className="btn btn-secondary" onClick={e => this.handleSubmit(e)}>
+                            Generate
+                            </button>
+                        </form>
+                    </div>
                 </div>
             );
         }

@@ -4,7 +4,7 @@ import Header from '../layout/Header'
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import Navbar from '../layout/Navbar';
-class ViewPatients extends Component {
+class ViewPatientsWithSeverity extends Component {
     state = {
         patients : []
     }
@@ -15,9 +15,9 @@ class ViewPatients extends Component {
                 'Access-Control-Allow-Credentials': true
             },
             method: 'GET',
-            url: process.env.REACT_APP_SERVER_SIDE_URL + 'api/patients',
+            url: process.env.REACT_APP_SERVER_SIDE_URL + 'api/patients?q=waiting-list',
             withCredentials: true,
-        }).then(res => this.setState({ patients: res.data}))
+        }).then(res => this.setState({patients : res.data}))
     }
     render () {
         const title = "Patients page";
@@ -26,11 +26,11 @@ class ViewPatients extends Component {
                 <Navbar />
                 <div className="container">
                     <Header title={title}/>
-                    <PatientList patients={this.state.patients} awaiting={false}/>
+                    <PatientList patients={this.state.patients} awaiting={true}/>
                 </div>
             </div>
         );
     }
 }
 
-export default ViewPatients;
+export default ViewPatientsWithSeverity;

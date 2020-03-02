@@ -12,6 +12,8 @@ class PatientItem extends Component {
             contact_number : this.props.patient.contact_number,
             age : this.props.patient.medical_data.age,
             diagnosis : this.props.patient.medical_data.diagnosis,
+            severity: this.props.patient.severity,
+            awaiting_list_flag : this.props.awaiting
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
@@ -24,7 +26,7 @@ class PatientItem extends Component {
             address : '',
             contact_number : '',
             age : '',
-            diagnosis : ''
+            diagnosis : '',
         }
     }
 
@@ -46,28 +48,36 @@ class PatientItem extends Component {
     }
 
     render () {
-        console.log(this.props.patient._id['$oid'])
         return (
             <div className="card card-wrapper"> 
                 <div className="row row-wrapper">
                     <div className="col-lg-2">
+                        <h5 align="center"><b>First name</b></h5>
                         <p className="patient-detail">{this.state.first_name}</p>
                     </div>
                     <div className="col-lg-2">
+                        <h5 align="center"><b>Second name</b></h5>
                         <p className="patient-detail">{this.state.second_name}</p>
                     </div>
                     <div className="col-lg-2">
+                        <h5 align="center"><b>Address</b></h5>
                         <p className="patient-detail">{this.state.address}</p>
                     </div>
                     <div className="col-lg-2">
+                        <h5 align="center"><b>Contact no.</b></h5>
                         <p className="patient-detail">{this.state.contact_number}</p>
                     </div>
                     <div className="col-lg-2">
+                        <h5 align="center"><b>Age</b></h5>
                         <p className="patient-detail">{this.state.age}</p>
                     </div>
-                    <div className="col-lg-2">
+                    {this.state.awaiting_list_flag == true ?  <div className="col-lg-2">
+                        <h5 align="center"><b>Severity</b></h5>
+                        <p className="patient-detail">{this.state.severity}</p>
+                    </div> : <div className="col-lg-2">
+                        <h5 align="center"><b>Diagnosis</b></h5>
                         <p className="patient-detail">{this.state.diagnosis}</p>
-                    </div>
+                    </div>}
                 </div>
                 <div className="row">
                     <div className="col-lg-1">

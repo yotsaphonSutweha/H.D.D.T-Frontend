@@ -8,6 +8,7 @@ import ViewPatient from './components/Pages/ViewPatient';
 import DiagnosePatient from './components/Pages/DiagnosePatient';
 import ConditionVisualisation from './components/Pages/ConditionVisualisation';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
+import ViewPatientsWithSeverity from './components/Pages/ViewPatientsWithSeverity';
 
 class App extends Component {
   render () {
@@ -30,12 +31,13 @@ class App extends Component {
             </React.Fragment>
           )}/>
           <Route path="/patients" render={props => (
-            <React.Fragment>
-              <ViewPatients />
-            </React.Fragment>
+            <ViewPatients />
+          )}/>
+          <Route path="/waiting-list" render={props => (
+            <ViewPatientsWithSeverity />
           )}/>
           <Route path="/patient" render={(props) => (
-              <ViewPatient locationSearch={props.location.search} /> 
+            <ViewPatient locationSearch={props.location.search} /> 
           )}/>
            <Route path="/condition-visualisation" render={(props) => (
               <ConditionVisualisation locationSearch={props.location.search} /> 
