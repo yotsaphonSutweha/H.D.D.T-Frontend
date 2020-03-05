@@ -30,6 +30,7 @@ class UpdatePatientDetailsForm extends Component {
             slope: '',
             ca: '',
             thal: '',
+            severity: '',
             completedDiagnosis: false,
             results: {},
             completedUpdate: false
@@ -37,6 +38,100 @@ class UpdatePatientDetailsForm extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handlePatientUpdate = this.handlePatientUpdate.bind(this);
         this.refreshThePage = this.refreshThePage.bind(this);
+        this.convertCp = this.convertCp.bind(this);
+        this.convertThal = this.convertThal.bind(this);
+        this.convertSlope = this.convertSlope.bind(this);
+        this.convertRestecg = this.convertRestecg.bind(this);
+        this.convertFbs = this.convertFbs.bind(this);
+        this.convertExang = this.convertExang.bind(this);
+        this.convertGender = this.convertGender.bind(this);
+        this.convertSeverity = this.convertSeverity.bind(this);
+    }
+
+    convertSeverity(value) {
+        if (value === 0) {
+            return 'Undetermined';
+        }
+        return value;
+    }
+    
+    convertCp(value) {
+        if (value === 1 ) {
+            return 'Typical anginal';
+        }
+        else if (value === 2) {
+            return 'Atypical anginal';
+        }
+        else if (value === 3) {
+            return 'Non-anginal pain';
+        }
+        else if (value === 4) {
+            return 'Asymptotic';
+        }
+       
+    }
+
+    convertThal(value) {
+        if (value === 3) {
+            return 'Normal';
+        }
+        else if (value === 6) {
+            return 'Fixed defect';
+        }
+        else if (value === 7) {
+            return 'Reversible defect';
+        }
+    }
+
+    convertSlope(value) {
+        if (value === 1) {
+            return 'Upsloping' ;
+        } 
+        else if (value === 2) {
+            return 'Flat';
+        }
+        else if (value === 3) {
+            return 'Downsloping';
+        }
+    }
+
+    convertRestecg(value) {
+        if (value === 0) {
+            return 'Normal';
+        }
+        else if (value === 1) {
+            return 'ST-T wave abnormality';
+        }
+        else if (value === 2) {
+            return 'Left ventricular hyperthrophy' ;
+        }
+    }
+
+    convertGender(value) {
+        if (value === 1) {
+            return 'Male';
+        }
+        else {
+            return 'Female'
+        }
+    }
+
+    convertExang(value) {
+        if (value === 1) {
+            return 'Yes';
+        }
+        else {
+            return 'No';
+        }
+    }
+
+    convertFbs(value) {
+        if (value === 1) {
+            return 'Yes';
+        }
+        else {
+            return 'No';
+        }
     }
 
     handleChange(event) {
@@ -58,7 +153,7 @@ class UpdatePatientDetailsForm extends Component {
             method: 'GET',
             url: process.env.REACT_APP_SERVER_SIDE_URL + 'api/patient?id=' + this.props.patientId,
             withCredentials: true,
-        }).then(res => this.setState({firstName: res.data.first_name, secondName: res.data.second_name, address: res.data.address, contactNumber: res.data.contact_number, nextOfKin1FirstName: res.data.next_of_kin1_first_name, nextOfKin1SecondName : res.data.next_of_kin1_second_name, nextOfKin2FirstName : res.data.next_of_kin2_first_name, nextOfKin2SecondName : res.data.next_of_kin2_second_name, age: res.data.medical_data.age, gender: res.data.medical_data.sex, chol: res.data.medical_data.chol, thalach: res.data.medical_data.thalach, exang: res.data.medical_data.exang, fbs: res.data.medical_data.fbs, oldpeak: res.data.medical_data.oldpeak, restecg: res.data.medical_data.restecg, ca: res.data.medical_data.ca, slope: res.data.medical_data.slope, thal: res.data.medical_data.thal, cp: res.data.medical_data.cp, trestbps: res.data.medical_data.trestbps}))
+        }).then(res => this.setState({firstName: res.data.first_name, secondName: res.data.second_name, address: res.data.address, contactNumber: res.data.contact_number, nextOfKin1FirstName: res.data.next_of_kin1_first_name, nextOfKin1SecondName : res.data.next_of_kin1_second_name, nextOfKin2FirstName : res.data.next_of_kin2_first_name, nextOfKin2SecondName : res.data.next_of_kin2_second_name, age: res.data.medical_data.age, gender: res.data.medical_data.sex, chol: res.data.medical_data.chol, thalach: res.data.medical_data.thalach, exang: res.data.medical_data.exang, fbs: res.data.medical_data.fbs, oldpeak: res.data.medical_data.oldpeak, restecg: res.data.medical_data.restecg, ca: res.data.medical_data.ca, slope: res.data.medical_data.slope, thal: res.data.medical_data.thal, cp: res.data.medical_data.cp, trestbps: res.data.medical_data.trestbps, severity: res.data.severity}))
     }
 
     handlePatientUpdate(event) {
@@ -97,149 +192,96 @@ class UpdatePatientDetailsForm extends Component {
                     <form onSubmit={this.handleSubmit}>
                         <div className="form-row">
                             <div className="form-group col-md-4">
-                                <label for="first_name">First name</label>
+                                <label for="first_name"><b>First name</b></label>
                                 <input type="text" className= "form-control" name="firstName" value={this.state.firstName} onChange={this.handleChange}></input>
                             </div>
                             <div className="form-group col-md-4">
-                                <label for="second_name">Second name</label>
+                                <label for="second_name"><b>Second name</b></label>
                                 <input type="text" className= "form-control" name="secondName" value={this.state.secondName} onChange={this.handleChange}></input>
                             </div>
                             <div className="form-group col-md-4">
-                                <label for="contact_number">Contact number</label>
+                                <label for="contact_number"><b>Contact number</b></label>
                                 <input type="text" className= "form-control" name="contactNumber" value={this.state.contactNumber} onChange={this.handleChange}></input>
                             </div>
                         </div>
                         <div className="form-group">
-                            <label for="address">Full address</label>
+                            <label for="address"><b>Full address</b></label>
                             <input type="text" className= "form-control" name="address" value={this.state.address} onChange={this.handleChange}></input>
                         </div>
                         <div className="form-group"> 
                         <h4>Next of Kin</h4>
                             <div className="form-row">
                                 <div className="form-group col-md-6">
-                                    <label for="nextOfKin1FirstName">First name</label>
+                                    <label for="nextOfKin1FirstName"><b>First name</b></label>
                                     <input type="text" className="form-control" name="nextOfKin1FirstName" value={this.state.nextOfKin1FirstName} onChange={this.handleChange}></input>
                                 </div>
                                 <div className="form-group col-md-6">
-                                    <label for="nextOfKin1SecondName">Second name</label>
+                                    <label for="nextOfKin1SecondName"><b>Second name</b></label>
                                     <input type="text" className="form-control" name="nextOfKin1SecondName" value={this.state.nextOfKin1SecondName} onChange={this.handleChange}></input>
                                 </div>
                                 <div className="form-group col-md-6">
-                                    <label for="nextOfKin1FirstName">First name</label>
+                                    <label for="nextOfKin1FirstName"><b>First name</b></label>
                                     <input type="text" className="form-control" name="nextOfKin2FirstName" value={this.state.nextOfKin2FirstName} onChange={this.handleChange}></input>
                                 </div>
                                 <div className="form-group col-md-6">
-                                    <label for="nextOfKin1SecondName">Second name</label>
+                                    <label for="nextOfKin1SecondName"><b>Second name</b></label>
                                     <input type="text" className="form-control" name="nextOfKin2SecondName" value={this.state.nextOfKin2SecondName} onChange={this.handleChange}></input>
                                 </div>
                             </div>
                         </div>
-                        <fieldset disabled>
-                            <div className="form-row">
-                                <div className="form-group col-md-3">
-                                    <label for="age">Age</label>
-                                    <input type="text" id="disabledTextInput" className="form-control" name="age" value={this.state.age} onChange={this.handleChange} required></input>
+                        <h4>Medical Infomration</h4>
+                        <div className="form-row">
+                                <div className="form-group col-md-4">
+                                    <p><b>Age:</b> {this.state.age}</p>
                                 </div>
-                                <div className="form-group col-md-3">
-                                    <label for="gender">Gender</label>
-                                    <select className="form-control" name="gender" value={this.state.gender} onChange={this.handleChange} required>
-                                        <option selected>Choose...</option>
-                                        <option>0</option>
-                                        <option>1</option>
-                                    </select>
+                                <div className="form-group col-md-4">
+                                    <p><b>Gender:</b> {this.convertGender(this.state.sex)}</p>
                                 </div>
-                                <div className="form-group col-md-3">
-                                    <label for="chol">Chol</label>
-                                    <input type="text" className="form-control" name="chol" value={this.state.chol} onChange={this.handleChange} required></input>
-                                </div>
-                                <div className="form-group col-md-3">
-                                    <label for="thalach">Thalach</label>
-                                    <input type="text" className="form-control" name="thalach" value={this.state.thalach} onChange={this.handleChange} required></input>
-                                </div>
-                            </div>
-
-                            <div className="form-row">
-                                <div className="form-group col-md-3">
-                                    <label for="exang">Exang</label>
-                                    <select className="form-control" name="exang" value={this.state.exang} onChange={this.handleChange}required>
-                                        <option selected>Choose...</option>
-                                        <option>0</option>
-                                        <option>1</option>
-                                    </select>
-                                </div>
-                                <div className="form-group col-md-3">
-                                    <label for="fbs">Fbs</label>
-                                    <select className="form-control" name="fbs" value={this.state.fbs} onChange={this.handleChange}required>
-                                        <option selected>Choose...</option>
-                                        <option>0</option>
-                                        <option>1</option>
-                                    </select>
-                                </div>
-                                <div className="form-group col-md-3">
-                                    <label for="oldpeak">Oldpeak</label>
-                                    <select className="form-control" name="oldpeak" value={this.state.oldpeak} onChange={this.handleChange} required>
-                                        <option selected>Choose...</option>
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                    </select>
-                                </div>
-                                <div className="form-group col-md-3">
-                                    <label for="restecg">Restecg</label>
-                                    <select className="form-control" name="restecg" value={this.state.restecg} onChange={this.handleChange} required>
-                                        <option selected>Choose...</option>
-                                        <option>0</option>
-                                        <option>1</option>
-                                        <option>2</option>
-                                    </select>
+                                <div className="form-group col-md-4">
+                                    <p><b>Serum Cholestrol in mg/dl:</b> {this.state.chol}</p>
                                 </div>
                             </div>
                             <div className="form-row">
-                                <div className="form-group col-md-3">
-                                    <label for="ca">CA</label>
-                                    <select className="form-control" name="ca" value={this.state.ca} onChange={this.handleChange}required>
-                                        <option selected>Choose...</option>
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                    </select>
+                                <div className="form-group col-md-4">
+                                    <p><b>Chest-pain Type:</b> {this.convertCp(this.state.cp)}</p>
                                 </div>
-                                <div className="form-group col-md-3">
-                                    <label for="slope">Slope</label>
-                                    <select className="form-control" name="slope" value={this.state.slope} onChange={this.handleChange}required>
-                                        <option selected>Choose...</option>
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                    </select>
+                                <div className="form-group col-md-4">
+                                    <p><b>Exercise Induced Agina:</b> {this.convertExang(this.state.exang)}</p>
                                 </div>
-                                <div className="form-group col-md-3">
-                                    <label for="thal">Thal</label>
-                                    <select className="form-control" name="thal" value={this.state.thal} onChange={this.handleChange}required>
-                                        <option selected>Choose...</option>
-                                        <option>3</option>
-                                        <option>6</option>
-                                        <option>7</option>
-                                    </select>
-                                </div>
-                                <div className="form-group col-md-3">
-                                    <label for="cp">CP</label>
-                                    <select className="form-control" name="cp" value={this.state.cp} onChange={this.handleChange}required>
-                                        <option selected>Choose...</option>
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                    </select>
+                                <div className="form-group col-md-4">
+                                    <p><b>Fasting Blood Sugar (>120mg/dl):</b>{this.convertFbs(this.state.fbs)}</p>
                                 </div>
                             </div>
                             <div className="form-row">
-                                <div className="form-group col-md-3">
-                                    <label for="trestbps">Trestbps</label>
-                                    <input type="text" className="form-control" name="trestbps" value={this.state.trestbps} onChange={this.handleChange}required></input>
+                                <div className="form-group col-md-4">
+                                    <p><b>ST Depression Induced:</b> {this.state.oldpeak}</p>
+                                </div>
+                                <div className="form-group col-md-4">
+                                    <p><b>Resting Electrocardiographic Result:</b> {this.convertRestecg(this.state.restecg)}</p>
+                                </div>
+                                <div className="form-group col-md-4">
+                                    <p><b>Number of Major Vessels:</b> {this.state.ca}</p>
                                 </div>
                             </div>
-                        </fieldset>
+                            <div className="form-row">
+                                <div className="form-group col-md-4">
+                                    <p><b>Thalassemia:</b> {this.convertThal(this.state.thal)}</p>
+                                </div>
+                                <div className="form-group col-md-4">
+                                    <p><b>Maximum Heart Rate Achieved:</b> {this.state.thalach}</p>
+                                </div>
+                                <div className="form-group col-md-4">
+                                    <p><b>Resting Blood Pressure in mmHg:</b> {this.state.trestbps}</p>
+                                </div>
+                            </div>
+                            <div className="form-row">
+                                <div className="form-group col-md-4">
+                                    <p><b>Slope of Peak Exercise ST Segment:</b> {this.convertSlope(this.state.slope)}</p>
+                                </div>
+                                <div className="form-group col-md-4">
+                                    <p><b>Severity:</b> {this.convertSeverity(this.state.severity)}</p>
+                                </div>
+                            </div>
                         <button type="submit" className="btn btn-secondary" onClick={e => this.handlePatientUpdate(e)}>
                             Update
                         </button>

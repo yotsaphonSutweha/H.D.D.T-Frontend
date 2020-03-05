@@ -18,7 +18,16 @@ class PatientItem extends Component {
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
+        this.convertSeverity = this.convertSeverity.bind(this);
     }
+
+    convertSeverity(value) {
+        if (value === 0) {
+            return 'Undetermined';
+        }
+        return value;
+    }
+    
 
     handleChange() {
         this.setState = {
@@ -79,7 +88,7 @@ class PatientItem extends Component {
                             </div>
                             {this.state.awaiting_list_flag == true ?  <div className="col-lg-2">
                                 <h5 align="center"><b>Severity</b></h5>
-                                <p className="patient-detail">{this.state.severity}</p>
+                                <p className="patient-detail">{this.convertSeverity(this.state.severity)}</p>
                             </div> : <div className="col-lg-2">
                                 <h5 align="center"><b>Diagnosis</b></h5>
                                 <p className="patient-detail">{this.state.diagnosis}</p>

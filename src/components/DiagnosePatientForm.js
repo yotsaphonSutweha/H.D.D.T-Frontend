@@ -1,6 +1,6 @@
 import React ,{ Component } from 'react';
 import PrimaryButton from './layout/PrimaryBotton';
-import Result from './Results';
+import Results from './Results';
 import axios from 'axios';
 import Header from './layout/Header';
 import CancelButton from './layout/CancelBotton';
@@ -37,7 +37,7 @@ class DiagnosePatientForm extends Component {
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.convertResrecg = this.convertResrecg.bind(this);
+        this.convertRestecg = this.convertRestecg.bind(this);
         this.convertSlope = this.convertSlope.bind(this);
         this.convertCp = this.convertCp.bind(this);
         this.convertThal = this.convertThal.bind(this);
@@ -106,7 +106,7 @@ class DiagnosePatientForm extends Component {
         }
     }
 
-    convertResrecg(value) {
+    convertRestecg(value) {
         if (value === 'Normal') {
             return 0;
         }
@@ -147,7 +147,7 @@ class DiagnosePatientForm extends Component {
                 trestbps: this.state.trestbps,
                 chol: this.state.chol,
                 fbs: this.state.fbs == "Yes" ? 1 : 0,
-                restecg: this.convertResrecg(this.state.restecg),
+                restecg: this.convertRestecg(this.state.restecg),
                 thalach: this.state.thalach,
                 exang: this.state.exang == "Yes" ? 1 : 0,
                 oldpeak: this.state.oldpeak,
@@ -173,7 +173,7 @@ class DiagnosePatientForm extends Component {
         if (this.state.completedDiagnosis) {
             console.log(this.state.results.accuracy)
             console.log(this.state.results)
-            return <Result diagnosticResult = {this.state.results}/>
+            return <Results diagnosticResult = {this.state.results}/>
         } 
         else {
         return (
