@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Loading from './layout/Loading';
+import MlModelsTable from './MlModelsTable';
 class Results extends Component {
 
     constructor(props) {
@@ -187,6 +188,7 @@ class Results extends Component {
                                 </div>
                             </div>
                         </div>
+                        <MlModelsTable models={this.props.diagnosticResult.models_details}/>
                 </div>
             );
         }
