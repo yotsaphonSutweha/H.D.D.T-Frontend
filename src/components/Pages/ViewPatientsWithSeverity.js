@@ -2,11 +2,17 @@ import React, { Component } from 'react'
 import PatientList from '../PatientList';
 import Header from '../layout/Header'
 import axios from 'axios';
-import PropTypes from 'prop-types';
+import helpers from '../helpers/Helpers';
+import DangerAlert from '../layout/DangerAlert';
 import Navbar from '../layout/Navbar';
 class ViewPatientsWithSeverity extends Component {
-    state = {
-        patients : []
+    constructor(props) {
+        super(props);
+        this.state = {
+            patients : [],
+            error: false,
+            errorMessage: ''
+        }
     }
     componentDidMount() {
         axios({
@@ -17,19 +23,48 @@ class ViewPatientsWithSeverity extends Component {
             method: 'GET',
             url: process.env.REACT_APP_SERVER_SIDE_URL + 'api/patients?q=waiting-list',
             withCredentials: true,
-        }).then(res => this.setState({patients : res.data}))
+        }).then(res => {
+            this.setState({patients : res.data})
+        }).catch(error => {
+            this.setState({
+                error: true,
+                errorMessage: error.response.data.message
+            });
+        });
     }
     render () {
         const title = "Opeartion Awaiting List";
-        return (
-            <div>
-                <Navbar />
-                <div className="container">
-                    <Header title={title}/>
-                    <PatientList patients={this.state.patients} awaiting={true}/>
+        if (!helpers.checkIfCookiesExists()) {
+            return (
+                <div>
+                    <Navbar />
+                    <div className="container">
+                        <div className="register-login-space">
+                            <DangerAlert message="Please Login"/> 
+                        </div>
+                    </div>
                 </div>
-            </div>
-        );
+            );
+        } 
+        else {
+            return (
+                <div>
+                    <Navbar />
+                    {this.state.error === false ? 
+                         <div className="container">
+                            <Header title={title}/>
+                            <PatientList patients={this.state.patients} awaiting={true}/>
+                        </div>
+                    :
+                    <div className="container">
+                        <div className="register-login-space">
+                            <DangerAlert message="Please Login"/> 
+                        </div>
+                    </div>
+                    }
+                </div>
+            );
+        }
     }
 }
 

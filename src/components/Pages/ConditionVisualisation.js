@@ -5,7 +5,8 @@ import Loading from '../layout/Loading';
 import Navbar from '../layout/Navbar';
 import CancelButton from '../layout/CancelBotton';
 import SuccessAlert from '../layout/SuccessAlert';
-
+import helpers from '../helpers/Helpers';
+import DangerAlert from '../layout/DangerAlert';
 class ConditionVisualisation extends Component {
     constructor(props) {
         super(props);
@@ -39,7 +40,9 @@ class ConditionVisualisation extends Component {
             x : '',
             severity : '',
             severityAssigned: false,
-            source : null
+            source : null,
+            error: false,
+            errorMessage: ''
         }
         this.handleChangeX = this.handleChangeX.bind(this);
         this.handleChangeY = this.handleChangeY.bind(this);
@@ -189,6 +192,11 @@ class ConditionVisualisation extends Component {
             }
         }).then(res => {
             this.setState({severityAssigned: true})
+        }).catch(error => {
+            this.setState({
+                error: true,
+                errorMessage: error.response.data.message
+            });
         });
     }
 
@@ -267,6 +275,11 @@ class ConditionVisualisation extends Component {
                 ),
             );
             this.setState({ source: "data:;base64," + base64 });
+        }).catch(error => {
+            this.setState({
+                error: true,
+                errorMessage : error.response.data.message
+            })
         });
     }
 
@@ -304,103 +317,134 @@ class ConditionVisualisation extends Component {
             ca: res.data.medical_data.ca,
             thal: res.data.medical_data.thal,
             diagnosis: res.data.medical_data.diagnosis
-        }))
+        })).catch(error => {
+            this.setState({
+                error: true,
+                errorMessage: error.response.data.message
+            });
+        });
     }
 
     render() {
-        if (this.state.age === '' && this.state.x === '') {
+        if (!helpers.checkIfCookiesExists()) {
             return (
-                <div>
-                <Navbar />
-                    <Loading />
-                </div>
-            );
-        } else {
-            console.log(this.state)
-            return(
                 <div>
                     <Navbar />
                     <div className="container">
-                        <div className="heading">
-                            <h3><b>Patient:</b> {this.state.firstName} {this.state.secondName}</h3>
-                            <h4 className="heading"><b>Condition Visualisation</b></h4>
-                            <p>Heart disease diagnosis of the patient against the existing data</p>
+                        <div className="register-login-space">
+                            <DangerAlert message="Please Login"/> 
                         </div>
-                        {this.state.severityAssigned === true ? <SuccessAlert message="Severity has been assigned successfully! Patient is added to the operation awaiting list."/> : null}
-                        <div className="row">
-                            <div className="img-area diagnosis-img">
-                                <img src={this.state.source} />
+                    </div>
+                </div>
+            );
+        } 
+        else {
+            if (this.state.age === '' && this.state.x === '') {
+                return (
+                    <div>
+                    <Navbar />
+                        <Loading />
+                    </div>
+                );
+            } 
+            else {
+                if (this.state.error) {
+                   return(
+                    <div>
+                        <Navbar />
+                        <div className="container">
+                            <div className="register-login-space">
+                                <DangerAlert message={this.state.errorMessage}/> 
                             </div>
                         </div>
-                        <div className="severity-from-wrapper">
-                            <form>
-                                <div className="form-row align-items-center">
-                                    <div className="col-lg-2">
-                                        <input className="form-control" placeholder="Severity" name="severity" value={this.state.severity} onChange={this.handleChange}></input>
+                    </div>
+                   );
+                }
+                return(
+                    <div>
+                        <Navbar />
+                        <div className="container">
+                            <div className="heading">
+                                <h3><b>Patient:</b> {this.state.firstName} {this.state.secondName}</h3>
+                                <h4 className="heading"><b>Condition Visualisation</b></h4>
+                                <p>Heart disease diagnosis of the patient against the existing data</p>
+                            </div>
+                            {this.state.severityAssigned === true ? <SuccessAlert message="Severity has been assigned successfully! Patient is added to the operation awaiting list."/> : null}
+                            <div className="row">
+                                <div className="img-area diagnosis-img">
+                                    <img src={this.state.source} />
+                                </div>
+                            </div>
+                            <div className="severity-from-wrapper">
+                                <form>
+                                    <div className="form-row align-items-center">
+                                        <div className="col-lg-2">
+                                            <input className="form-control" placeholder="Severity" name="severity" value={this.state.severity} onChange={this.handleChange}></input>
+                                        </div>
+                                        <div className="col-lg-2">
+                                            <button type="submit" className="btn btn-secondary button" onClick={e => this.handleAssign(e)}>
+                                                Assign
+                                            </button>
+                                        </div>
                                     </div>
-                                    <div className="col-lg-2">
-                                        <button type="submit" className="btn btn-secondary button" onClick={e => this.handleAssign(e)}>
-                                            Assign
+                                </form>
+                            </div>
+                            <form>
+                                <div class="form-row">
+                                    <div class="form-group col-lg-6">
+                                        <label for="condition1">Medical Condition 1: X axis</label>
+                                        <select class="form-control" id="condition1" value={this.state.selectedXAxis} onChange={this.handleChangeX}>
+                                            <option>Choose...</option>
+                                            <option>Age</option>
+                                            <option>Number of Major Vessels</option>
+                                            <option>Serum Cholesterol</option>
+                                            <option>Chest-pain Type</option>
+                                            <option>Exercise Induced Agina</option>
+                                            <option>Fasting Blood Sugar</option>
+                                            <option>ST Dpression Induced</option>
+                                            <option>Resting Electrocardiographic Result</option>
+                                            <option>Gender</option>
+                                            <option>Thalassemia</option>
+                                            <option>Maximum Heart Rate Achieved</option>
+                                            <option>Resting Blood Pressure</option>
+                                            <option>Slope of Peak Exercise ST Segment</option>
+                                        </select>
+                                        </div>
+                                        <div class="form-group col-lg-6">
+                                        <label for="condition2">Medical Condition 2: Y axis</label>
+                                        <select class="form-control" id="condition2" value={this.state.selectedYAxis} onChange={this.handleChangeY}>
+                                            <option>Choose...</option>
+                                            <option>Age</option>
+                                            <option>Number of Major Vessels</option>
+                                            <option>Serum Cholesterol</option>
+                                            <option>Chest-pain Type</option>
+                                            <option>Exercise Induced Agina</option>
+                                            <option>Fasting Blood Sugar</option>
+                                            <option>ST Dpression Induced</option>
+                                            <option>Resting Electrocardiographic Result</option>
+                                            <option>Gender</option>
+                                            <option>Thalassemia</option>
+                                            <option>Maximum Heart Rate Achieved</option>
+                                            <option>Resting Blood Pressure</option>
+                                            <option>Slope of Peak Exercise ST Segment</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-lg-2"> 
+                                        <button type="submit" className="btn btn-secondary button" onClick={e => this.handleSubmit(e)}>
+                                            Generate
                                         </button>
+                                    </div>
+                                    <div className="col-lg-2"> 
+                                        <CancelButton />
                                     </div>
                                 </div>
                             </form>
                         </div>
-                        <form>
-                            <div class="form-row">
-                                <div class="form-group col-lg-6">
-                                    <label for="condition1">Medical Condition 1: X axis</label>
-                                    <select class="form-control" id="condition1" value={this.state.selectedXAxis} onChange={this.handleChangeX}>
-                                        <option>Choose...</option>
-                                        <option>Age</option>
-                                        <option>Number of Major Vessels</option>
-                                        <option>Serum Cholesterol</option>
-                                        <option>Chest-pain Type</option>
-                                        <option>Exercise Induced Agina</option>
-                                        <option>Fasting Blood Sugar</option>
-                                        <option>ST Dpression Induced</option>
-                                        <option>Resting Electrocardiographic Result</option>
-                                        <option>Gender</option>
-                                        <option>Thalassemia</option>
-                                        <option>Maximum Heart Rate Achieved</option>
-                                        <option>Resting Blood Pressure</option>
-                                        <option>Slope of Peak Exercise ST Segment</option>
-                                    </select>
-                                    </div>
-                                    <div class="form-group col-lg-6">
-                                    <label for="condition2">Medical Condition 2: Y axis</label>
-                                    <select class="form-control" id="condition2" value={this.state.selectedYAxis} onChange={this.handleChangeY}>
-                                        <option>Choose...</option>
-                                        <option>Age</option>
-                                        <option>Number of Major Vessels</option>
-                                        <option>Serum Cholesterol</option>
-                                        <option>Chest-pain Type</option>
-                                        <option>Exercise Induced Agina</option>
-                                        <option>Fasting Blood Sugar</option>
-                                        <option>ST Dpression Induced</option>
-                                        <option>Resting Electrocardiographic Result</option>
-                                        <option>Gender</option>
-                                        <option>Thalassemia</option>
-                                        <option>Maximum Heart Rate Achieved</option>
-                                        <option>Resting Blood Pressure</option>
-                                        <option>Slope of Peak Exercise ST Segment</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col-lg-2"> 
-                                    <button type="submit" className="btn btn-secondary button" onClick={e => this.handleSubmit(e)}>
-                                        Generate
-                                    </button>
-                                </div>
-                                <div className="col-lg-2"> 
-                                    <CancelButton />
-                                </div>
-                            </div>
-                        </form>
                     </div>
-                </div>
-            );
+                );
+            }
         }
     }
 }

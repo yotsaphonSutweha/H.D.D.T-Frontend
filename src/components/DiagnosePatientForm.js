@@ -5,6 +5,7 @@ import axios from 'axios';
 import Header from './layout/Header';
 import CancelButton from './layout/CancelBotton';
 import DangerAlert from './layout/DangerAlert';
+import helpers from './helpers/Helpers';
 class DiagnosePatientForm extends Component {
     constructor(props) {
         super(props)
@@ -162,183 +163,183 @@ class DiagnosePatientForm extends Component {
                 results : res.data
             }) 
         }).catch(error => {
-            console.log(error);
             this.setState({
-                inputError : true
+                inputError : true,
+                errorMessage : error.response.data.message
             });
         });
 
     }
     render () {
-        if (this.state.completedDiagnosis) {
-            console.log(this.state.results.accuracy)
-            console.log(this.state.results)
-            return <Results diagnosticResult = {this.state.results}/>
-        } 
-        else {
-        return (
-            <div className="container">
-                <Header title="Diagnose Patient"/>
-                {this.state.inputError === true ? <DangerAlert message="Please provide appropriate input"/> : null}
-                <div className="card-wrapper">
-                    <form onSubmit={this.handleSubmit}>
-                        <div className="form-row">
-                            <div className="form-group col-md-4">
-                                <label for="first_name">First name</label>
-                                <input type="text" className= "form-control" name="firstName" value={this.state.firstName} onChange={this.handleChange}></input>
-                            </div>
-                            <div className="form-group col-md-4">
-                                <label for="second_name">Second name</label>
-                                <input type="text" className= "form-control" name="secondName" value={this.state.secondName} onChange={this.handleChange}></input>
-                            </div>
-                            <div className="form-group col-md-4">
-                                <label for="contact_number">Contact number</label>
-                                <input type="text" className= "form-control" name="contactNumber" value={this.state.contactNumber} onChange={this.handleChange}></input>
-                            </div>
-                        </div>
-                        <div className="form-group">
-                            <label for="address">Full address</label>
-                            <input type="text" className= "form-control" name="address" value={this.state.address} onChange={this.handleChange}></input>
-                        </div>
-                        <div className="form-group"> 
-                        <h4>Next of Kin</h4>
-                            <div className="form-row">
-                                <div className="form-group col-md-6">
-                                    <label for="nextOfKin1FirstName">First name</label>
-                                    <input type="text" className="form-control" name="nextOfKin1FirstName" value={this.state.nextOfKin1FirstName} onChange={this.handleChange}></input>
+            if (this.state.completedDiagnosis) {
+                console.log(this.state.results.accuracy)
+                console.log(this.state.results)
+                return <Results diagnosticResult = {this.state.results}/>
+            } 
+            else {
+                return (
+                    <div className="container">
+                        <Header title="Diagnose Patient"/>
+                        {this.state.inputError === true ? <DangerAlert message={this.state.errorMessage}/> : null}
+                        <div className="card-wrapper">
+                            <form onSubmit={this.handleSubmit}>
+                                <div className="form-row">
+                                    <div className="form-group col-md-4">
+                                        <label for="first_name">First name</label>
+                                        <input type="text" className= "form-control" name="firstName" value={this.state.firstName} onChange={this.handleChange}></input>
+                                    </div>
+                                    <div className="form-group col-md-4">
+                                        <label for="second_name">Second name</label>
+                                        <input type="text" className= "form-control" name="secondName" value={this.state.secondName} onChange={this.handleChange}></input>
+                                    </div>
+                                    <div className="form-group col-md-4">
+                                        <label for="contact_number">Contact number</label>
+                                        <input type="text" className= "form-control" name="contactNumber" value={this.state.contactNumber} onChange={this.handleChange}></input>
+                                    </div>
                                 </div>
-                                <div className="form-group col-md-6">
-                                    <label for="nextOfKin1SecondName">Second name</label>
-                                    <input type="text" className="form-control" name="nextOfKin1SecondName" value={this.state.nextOfKin1SecondName} onChange={this.handleChange}></input>
+                                <div className="form-group">
+                                    <label for="address">Full address</label>
+                                    <input type="text" className= "form-control" name="address" value={this.state.address} onChange={this.handleChange}></input>
                                 </div>
-                                <div className="form-group col-md-6">
-                                    <label for="nextOfKin1FirstName">First name</label>
-                                    <input type="text" className="form-control" name="nextOfKin2FirstName" value={this.state.nextOfKin2FirstName} onChange={this.handleChange}></input>
+                                <div className="form-group"> 
+                                <h4>Next of Kin</h4>
+                                    <div className="form-row">
+                                        <div className="form-group col-md-6">
+                                            <label for="nextOfKin1FirstName">First name</label>
+                                            <input type="text" className="form-control" name="nextOfKin1FirstName" value={this.state.nextOfKin1FirstName} onChange={this.handleChange}></input>
+                                        </div>
+                                        <div className="form-group col-md-6">
+                                            <label for="nextOfKin1SecondName">Second name</label>
+                                            <input type="text" className="form-control" name="nextOfKin1SecondName" value={this.state.nextOfKin1SecondName} onChange={this.handleChange}></input>
+                                        </div>
+                                        <div className="form-group col-md-6">
+                                            <label for="nextOfKin1FirstName">First name</label>
+                                            <input type="text" className="form-control" name="nextOfKin2FirstName" value={this.state.nextOfKin2FirstName} onChange={this.handleChange}></input>
+                                        </div>
+                                        <div className="form-group col-md-6">
+                                            <label for="nextOfKin1SecondName">Second name</label>
+                                            <input type="text" className="form-control" name="nextOfKin2SecondName" value={this.state.nextOfKin2SecondName} onChange={this.handleChange}></input>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="form-group col-md-6">
-                                    <label for="nextOfKin1SecondName">Second name</label>
-                                    <input type="text" className="form-control" name="nextOfKin2SecondName" value={this.state.nextOfKin2SecondName} onChange={this.handleChange}></input>
+        
+                                <div className="form-row">
+                                    <div className="form-group col-md-3">
+                                        <label for="age">Age</label>
+                                        <input type="text" className="form-control" name="age" value={this.state.age} onChange={this.handleChange} required></input>
+                                    </div>
+                                    <div className="form-group col-md-3">
+                                        <label for="gender">Gender</label>
+                                        <select className="form-control" name="gender" value={this.state.gender} onChange={this.handleChange} required>
+                                            <option selected>Choose...</option>
+                                            <option>Female</option>
+                                            <option>Male</option>
+                                        </select>
+                                    </div>
+                                    <div className="form-group col-md-3">
+                                        <label for="chol">Serum Cholestrol in mg/dl</label>
+                                        <input type="text" className="form-control" name="chol" value={this.state.chol} onChange={this.handleChange} required></input>
+                                    </div>
+                                    <div className="form-group col-md-3">
+                                        <label for="thalach">Maximum Heart Rate Achieved</label>
+                                        <input type="text" className="form-control" name="thalach" value={this.state.thalach} onChange={this.handleChange} required></input>
+                                    </div>
                                 </div>
-                            </div>
+        
+                                <div className="form-row">
+                                    <div className="form-group col-md-3">
+                                        <label for="exang">Exercise Induced Agina</label>
+                                        <select className="form-control" name="exang" value={this.state.exang} onChange={this.handleChange}required>
+                                            <option selected>Choose...</option>
+                                            <option>Yes</option>
+                                            <option>No</option>
+                                        </select>
+                                    </div>
+                                    <div className="form-group col-md-3">
+                                        <label for="fbs">Fasting Blood Sugar (>120mg/dl)</label>
+                                        <select className="form-control" name="fbs" value={this.state.fbs} onChange={this.handleChange}required>
+                                            <option selected>Choose...</option>
+                                            <option>Yes</option>
+                                            <option>No</option>
+                                        </select>
+                                    </div>
+                                    <div className="form-group col-md-3">
+                                        <label for="oldpeak">ST Depression Induced</label>
+                                        <select className="form-control" name="oldpeak" value={this.state.oldpeak} onChange={this.handleChange} required>
+                                            <option selected>Choose...</option>
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                        </select>
+                                    </div>
+                                    <div className="form-group col-md-3">
+                                        <label for="restecg">Resting Electrocardiographic Result</label>
+                                        <select className="form-control" name="restecg" value={this.state.restecg} onChange={this.handleChange} required>
+                                            <option selected>Choose...</option>
+                                            <option>Normal</option>
+                                            <option>ST-T wave abnormality</option>
+                                            <option>Left ventricular hyperthrophy</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className="form-row">
+                                    <div className="form-group col-md-3">
+                                        <label for="ca">Number of Major Vessels</label>
+                                        <select className="form-control" name="ca" value={this.state.ca} onChange={this.handleChange}required>
+                                            <option selected>Choose...</option>
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                        </select>
+                                    </div>
+                                    <div className="form-group col-md-3">
+                                        <label for="slope">Slope of Peak Exercise ST Segment</label>
+                                        <select className="form-control" name="slope" value={this.state.slope} onChange={this.handleChange}required>
+                                            <option selected>Choose...</option>
+                                            <option>Upsloping</option>
+                                            <option>Flat</option>
+                                            <option>Downsloping</option>
+                                        </select>
+                                    </div>
+                                    <div className="form-group col-md-3">
+                                        <label for="thal">Thalassemia</label>
+                                        <select className="form-control" name="thal" value={this.state.thal} onChange={this.handleChange}required>
+                                            <option selected>Choose...</option>
+                                            <option>Normal</option>
+                                            <option>Fixed defect</option>
+                                            <option>Reversible defect</option>
+                                        </select>
+                                    </div>
+                                    <div className="form-group col-md-3">
+                                        <label for="cp">Chest-pain Type</label>
+                                        <select className="form-control" name="cp" value={this.state.cp} onChange={this.handleChange}required>
+                                            <option selected>Choose...</option>
+                                            <option>Typical anginal</option>
+                                            <option>Atypical anginal</option>
+                                            <option>Non-anginal pain</option>
+                                            <option>Asymptotic</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className="form-row">
+                                    <div className="form-group col-md-3">
+                                        <label for="trestbps">Resting Blood Pressure in mmHg</label>
+                                        <input type="text" className="form-control" name="trestbps" value={this.state.trestbps} onChange={this.handleChange}required></input>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-lg-2">
+                                        <PrimaryButton name="Diagnose"/>
+                                    </div>
+                                    <div className="col-lg-2">
+                                        <CancelButton/>
+                                    </div>
+                                </div>    
+                            </form>
                         </div>
-
-                        <div className="form-row">
-                            <div className="form-group col-md-3">
-                                <label for="age">Age</label>
-                                <input type="text" className="form-control" name="age" value={this.state.age} onChange={this.handleChange} required></input>
-                            </div>
-                            <div className="form-group col-md-3">
-                                <label for="gender">Gender</label>
-                                <select className="form-control" name="gender" value={this.state.gender} onChange={this.handleChange} required>
-                                    <option selected>Choose...</option>
-                                    <option>Female</option>
-                                    <option>Male</option>
-                                </select>
-                            </div>
-                            <div className="form-group col-md-3">
-                                <label for="chol">Serum Cholestrol in mg/dl</label>
-                                <input type="text" className="form-control" name="chol" value={this.state.chol} onChange={this.handleChange} required></input>
-                            </div>
-                            <div className="form-group col-md-3">
-                                <label for="thalach">Maximum Heart Rate Achieved</label>
-                                <input type="text" className="form-control" name="thalach" value={this.state.thalach} onChange={this.handleChange} required></input>
-                            </div>
-                        </div>
-
-                        <div className="form-row">
-                            <div className="form-group col-md-3">
-                                <label for="exang">Exercise Induced Agina</label>
-                                <select className="form-control" name="exang" value={this.state.exang} onChange={this.handleChange}required>
-                                    <option selected>Choose...</option>
-                                    <option>Yes</option>
-                                    <option>No</option>
-                                </select>
-                            </div>
-                            <div className="form-group col-md-3">
-                                <label for="fbs">Fasting Blood Sugar (>120mg/dl)</label>
-                                <select className="form-control" name="fbs" value={this.state.fbs} onChange={this.handleChange}required>
-                                    <option selected>Choose...</option>
-                                    <option>Yes</option>
-                                    <option>No</option>
-                                </select>
-                            </div>
-                            <div className="form-group col-md-3">
-                                <label for="oldpeak">ST Depression Induced</label>
-                                <select className="form-control" name="oldpeak" value={this.state.oldpeak} onChange={this.handleChange} required>
-                                    <option selected>Choose...</option>
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                </select>
-                            </div>
-                            <div className="form-group col-md-3">
-                                <label for="restecg">Resting Electrocardiographic Result</label>
-                                <select className="form-control" name="restecg" value={this.state.restecg} onChange={this.handleChange} required>
-                                    <option selected>Choose...</option>
-                                    <option>Normal</option>
-                                    <option>ST-T wave abnormality</option>
-                                    <option>Left ventricular hyperthrophy</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div className="form-row">
-                            <div className="form-group col-md-3">
-                                <label for="ca">Number of Major Vessels</label>
-                                <select className="form-control" name="ca" value={this.state.ca} onChange={this.handleChange}required>
-                                    <option selected>Choose...</option>
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                </select>
-                            </div>
-                            <div className="form-group col-md-3">
-                                <label for="slope">Slope of Peak Exercise ST Segment</label>
-                                <select className="form-control" name="slope" value={this.state.slope} onChange={this.handleChange}required>
-                                    <option selected>Choose...</option>
-                                    <option>Upsloping</option>
-                                    <option>Flat</option>
-                                    <option>Downsloping</option>
-                                </select>
-                            </div>
-                            <div className="form-group col-md-3">
-                                <label for="thal">Thalassemia</label>
-                                <select className="form-control" name="thal" value={this.state.thal} onChange={this.handleChange}required>
-                                    <option selected>Choose...</option>
-                                    <option>Normal</option>
-                                    <option>Fixed defect</option>
-                                    <option>Reversible defect</option>
-                                </select>
-                            </div>
-                            <div className="form-group col-md-3">
-                                <label for="cp">Chest-pain Type</label>
-                                <select className="form-control" name="cp" value={this.state.cp} onChange={this.handleChange}required>
-                                    <option selected>Choose...</option>
-                                    <option>Typical anginal</option>
-                                    <option>Atypical anginal</option>
-                                    <option>Non-anginal pain</option>
-                                    <option>Asymptotic</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div className="form-row">
-                            <div className="form-group col-md-3">
-                                <label for="trestbps">Resting Blood Pressure in mmHg</label>
-                                <input type="text" className="form-control" name="trestbps" value={this.state.trestbps} onChange={this.handleChange}required></input>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-lg-2">
-                                <PrimaryButton name="Diagnose"/>
-                            </div>
-                            <div className="col-lg-2">
-                                <CancelButton/>
-                            </div>
-                        </div>    
-                    </form>
-                </div>
-            </div>
-        );
-        }
+                    </div>
+                );
+            }
     }
 }
 
