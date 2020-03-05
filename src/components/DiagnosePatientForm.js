@@ -326,8 +326,14 @@ class DiagnosePatientForm extends Component {
                                 <input type="text" className="form-control" name="trestbps" value={this.state.trestbps} onChange={this.handleChange}required></input>
                             </div>
                         </div>
-                        <PrimaryButton name="Diagnose"/>
-                        <CancelButton />
+                        <div className="row">
+                            <div className="col-lg-2">
+                                <PrimaryButton name="Diagnose"/>
+                            </div>
+                            <div className="col-lg-2">
+                                <CancelButton/>
+                            </div>
+                        </div>    
                     </form>
                 </div>
             </div>

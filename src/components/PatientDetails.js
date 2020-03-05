@@ -201,9 +201,17 @@ class PatientDetails extends Component {
                                     <p><b>Severity:</b> {this.convertSeverity(this.props.patientDetails.severity)}</p>
                                 </div>
                             </div>
-                        <a href={'condition-visualisation?id=' + this.props.patientDetails._id.$oid} className="btn btn-primary">Visualise condition</a>
-                        <a href={'patient?id=' + this.props.patientDetails._id.$oid + '&q=update'} className="btn btn-secondary a-button">Update</a>
-                        <CancelButton/>
+                        <div className="row">
+                            <div className="col-lg-3">
+                                <a href={'condition-visualisation?id=' + this.props.patientDetails._id.$oid} className="btn btn-primary button">Visualise condition</a>
+                            </div>
+                            <div className="col-lg-2">
+                                <a href={'patient?id=' + this.props.patientDetails._id.$oid + '&q=update'} className="btn btn-secondary button">Update</a>
+                            </div>
+                            <div className="col-lg-2">
+                                <CancelButton/>
+                            </div>
+                        </div>
                     </div>
                 </div>
             );

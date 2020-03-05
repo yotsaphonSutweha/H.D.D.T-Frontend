@@ -282,10 +282,16 @@ class UpdatePatientDetailsForm extends Component {
                                     <p><b>Severity:</b> {this.convertSeverity(this.state.severity)}</p>
                                 </div>
                             </div>
-                        <button type="submit" className="btn btn-secondary" onClick={e => this.handlePatientUpdate(e)}>
-                            Update
-                        </button>
-                        <CancelButton />
+                            <div className="row">
+                                <div className="col-lg-2">
+                                    <button type="submit" className="btn btn-secondary button" onClick={e => this.handlePatientUpdate(e)}>
+                                        Update
+                                    </button>
+                                </div>
+                                <div className="col-lg-2">
+                                    <CancelButton/>
+                                </div>
+                            </div>    
                     </form>
                 </div>
             </div>

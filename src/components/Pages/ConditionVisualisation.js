@@ -322,7 +322,9 @@ class ConditionVisualisation extends Component {
                     <Navbar />
                     <div className="container">
                         <div className="heading">
-                            <h3>{this.state.firstName} {this.state.secondName}</h3>
+                            <h3><b>Patient:</b> {this.state.firstName} {this.state.secondName}</h3>
+                            <h4 className="heading"><b>Condition Visualisation</b></h4>
+                            <p>Heart disease diagnosis of the patient against the existing data</p>
                         </div>
                         {this.state.severityAssigned === true ? <SuccessAlert message="Severity has been assigned successfully! Patient is added to the operation awaiting list."/> : null}
                         <div className="row">
@@ -337,7 +339,7 @@ class ConditionVisualisation extends Component {
                                         <input className="form-control" placeholder="Severity" name="severity" value={this.state.severity} onChange={this.handleChange}></input>
                                     </div>
                                     <div className="col-lg-2">
-                                        <button type="submit" className="btn btn-secondary" onClick={e => this.handleAssign(e)}>
+                                        <button type="submit" className="btn btn-secondary button" onClick={e => this.handleAssign(e)}>
                                             Assign
                                         </button>
                                     </div>
@@ -385,10 +387,16 @@ class ConditionVisualisation extends Component {
                                     </select>
                                 </div>
                             </div>
-                            <button type="submit" className="btn btn-secondary" onClick={e => this.handleSubmit(e)}>
-                            Generate
-                            </button>
-                            <CancelButton />
+                            <div className="row">
+                                <div className="col-lg-2"> 
+                                    <button type="submit" className="btn btn-secondary button" onClick={e => this.handleSubmit(e)}>
+                                        Generate
+                                    </button>
+                                </div>
+                                <div className="col-lg-2"> 
+                                    <CancelButton />
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>

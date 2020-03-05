@@ -95,13 +95,13 @@ class PatientItem extends Component {
                             </div>}
                         </div>
                         <div className="row">
-                            <div className="col-lg-1">
+                            <div className="col-lg-2">
                                 <a href={'patient?id=' + this.props.patient._id.$oid}className="btn btn-primary button">View</a>
                             </div>
-                            <div className="col-lg-1">
+                            <div className="col-lg-2">
                                 <a href={'patient?id=' + this.props.patient._id.$oid + '&q=update'} className="btn btn-secondary button">Update</a>
                             </div>
-                            <div className="col-lg-1">
+                            <div className="col-lg-2">
                                 <button  type='submit' className="btn btn-danger button" onClick={e => this.handleDelete(e)}>
                                     Delete
                                 </button>
