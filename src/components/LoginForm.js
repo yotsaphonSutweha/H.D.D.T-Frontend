@@ -7,8 +7,8 @@ class LoginForm extends Component {
                  <div class="content-wrapper user-form">
                     <form method="POST" action={process.env.REACT_APP_SERVER_SIDE_URL + "login"}>
                         <div className="form-group">
-                            <label for="doctorId">Employee ID</label>
-                            <input type="text" className="form-control" name="doctorId"/>
+                            <label for="employeeId">Employee ID</label>
+                            <input type="text" className="form-control" name="employeeId"/>
                         </div>
                         <div className="form-group">
                             <label for="password">Password</label>
