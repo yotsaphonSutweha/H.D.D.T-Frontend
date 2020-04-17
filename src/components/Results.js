@@ -137,7 +137,7 @@ class Results extends Component {
                                     <p><b>Second name:</b> {this.props.diagnosticResult.personal_details.second_name}</p>
                                 </div>
                             </div>
-                            <h4>Medical Infomration</h4>
+                            <h4>Medical Information</h4>
                             <div className="form-row">
                                 <div className="form-group col-md-4">
                                     <p><b>Age:</b> {this.props.diagnosticResult.medical_details.age}</p>
@@ -157,7 +157,7 @@ class Results extends Component {
                                     <p><b>Exercise Induced Agina:</b> {this.convertExang(this.props.diagnosticResult.medical_details.exang)}</p>
                                 </div>
                                 <div className="form-group col-md-4">
-                                    <p><b>Fasting Blood Sugar (>120mg/dl):</b>{this.convertFbs(this.props.diagnosticResult.medical_details.fbs)}</p>
+                                    <p><b>Fasting Blood Sugar (>120mg/dl):</b>   {this.convertFbs(this.props.diagnosticResult.medical_details.fbs)}</p>
                                 </div>
                             </div>
                             <div className="form-row">

@@ -35,6 +35,11 @@ class MlModelsTable extends Component {
                         <td>{this.props.models.knn.accuracy}</td>
                         <td>{this.convertDiagnosticResult(this.props.models.knn.prediction)}</td>
                     </tr>
+                    <tr>
+                        <td>{this.props.models.svm.name}</td>
+                        <td>{this.props.models.svm.accuracy}</td>
+                        <td>{this.convertDiagnosticResult(this.props.models.svm.prediction)}</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
