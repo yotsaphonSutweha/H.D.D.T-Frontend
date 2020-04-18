@@ -66,7 +66,8 @@ class RegisterForm extends Component {
             });
         }).catch(error => {
             this.setState({
-                error: true
+                error: true,
+                errorMessage: error.response.data.message
             });
         });
     }
