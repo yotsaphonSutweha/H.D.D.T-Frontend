@@ -1,24 +1,46 @@
-import React, { Component } from 'react';
-import Cookies from 'universal-cookie';
-
+import React, { Component } from "react";
+import Cookies from "universal-cookie";
+import axios from "axios";
+import { Redirect } from 'react-router-dom';
 class Navbar extends Component {
 
     constructor(props) {
         super(props);
         const cookies = new Cookies();
         this.state = {
-           cookieName : cookies.get('hddt')
+           cookieName : cookies.get("hddt"),
+           redirect: false
         };
         this.unsetCookie = this.unsetCookie.bind(this);
+        this.redirectToLoginPage = this.redirectToLoginPage.bind(this);
     }
     
     unsetCookie(event) {
+        event.preventDefault();
+        const cookies = new Cookies();
+        cookies.remove("hddt");
+        axios({
+            headers : {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': true
+            },
+            method : "GET",
+            url: process.env.REACT_APP_SERVER_SIDE_URL + 'api/logout',
+            withCredentials: true
+        }).then(res => {
+            console.log(res);
+            this.setState({
+                redirect: true
+            });
+        });
+
+    }
+
+    redirectToLoginPage() {
         if(this.state.redirect) {
-            const cookies = new Cookies();
-            cookies.remove('hddt');
+            return <Redirect to='/login' />
         }
     }
-    
 
     render() {
         if  (this.state.cookieName === undefined) {
@@ -46,6 +68,7 @@ class Navbar extends Component {
         else {
             return (
                 <div>
+                    {this.redirectToLoginPage()}
                     <nav class="navbar navbar-expand-lg navbar-light bg-light  navbar-custom">
                         <a className="navbar-brand" href="/patients">Patients</a>
                         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="top-nav" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,7 +83,7 @@ class Navbar extends Component {
                                     <a className="nav-link" href="/diagnose-patient">Diagnose Patient</a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href={process.env.REACT_APP_SERVER_SIDE_URL + "logout"} onClick={e => this.unsetCookie(e)}>Logout</a>
+                                    <a className="nav-link" onClick={this.unsetCookie} href="/login">Logout</a>
                                 </li> 
                             </ul>
                         </div>
