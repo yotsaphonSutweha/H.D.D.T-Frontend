@@ -34,8 +34,10 @@ class LoginForm extends Component {
 
     setCookie() {
         if(this.state.redirect) {
+            const date = new Date();
             const cookies = new Cookies();
-            cookies.set('hddt', 'signed_in_cookie', { path: '/' });
+            date.setTime(date.getTime() + (minutes*60));
+            cookies.set('hddt', 'signed_in_cookie', { path: '/', expires: date});
         }
     }
 

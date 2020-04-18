@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Cookies  from 'js-cookie';
-
+import Cookies from 'universal-cookie';
 
 class Navbar extends Component {
 
@@ -9,7 +9,16 @@ class Navbar extends Component {
         this.state = {
            cookieName : Cookies.get('hddt')
         };
+        this.unsetCookie = this.unsetCookie.bind(this);
     }
+    
+    unsetCookie() {
+        if(this.state.redirect) {
+            const cookies = new Cookies();
+            cookies.remove('hddt');
+        }
+    }
+    
 
     render() {
         if  (this.state.cookieName === undefined) {
@@ -51,7 +60,7 @@ class Navbar extends Component {
                                     <a className="nav-link" href="/diagnose-patient">Diagnose Patient</a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href={process.env.REACT_APP_SERVER_SIDE_URL + "logout"}>Logout</a>
+                                    <a className="nav-link" href={process.env.REACT_APP_SERVER_SIDE_URL + "logout"} onClick={this.unsetCookie()}>Logout</a>
                                 </li> 
                             </ul>
                         </div>
