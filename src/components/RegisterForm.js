@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PrimaryButton from "./layout/PrimaryBotton";
 import axios from 'axios';
 import DangerAlert from './layout/DangerAlert';
-import { Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom';
 
 class RegisterForm extends Component {
     constructor(props) {
@@ -71,13 +71,14 @@ class RegisterForm extends Component {
             });
         });
     }
+    
     render () {
         return (
                 <div className="container">
                     {this.state.error === true ? <DangerAlert message={this.state.errorMessage}/> : null}
                     {this.redirectToPatientsPage()}
                     <div className="content-wrapper user-form">
-                        <form method="POST" action={process.env.REACT_APP_SERVER_SIDE_URL + 'register'}>
+                        <form onSubmit={this.handleSubmit}>
                             <div className="form-row">
                                 <div className="form-group col-md-6">
                                     <label for="employeeId">Employee ID</label>
@@ -124,9 +125,7 @@ class RegisterForm extends Component {
                                     <input type="text" className="form-control" name="ward" value={this.state.ward} onChange={this.handleChange} required/>
                                 </div>
                             </div>
-                            <button type="submit" className="btn btn-primary button" onClick={e => this.handleSubmit(e)}>
-                                Register
-                            </button>
+                            <PrimaryButton name="Register"/>
                             <div className="register-login-space">
                                 <p>Already have an account? <a href="/login" style={{color:"blue"}}>Log In</a></p>
                             </div>
