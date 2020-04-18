@@ -12,7 +12,7 @@ class Navbar extends Component {
         this.unsetCookie = this.unsetCookie.bind(this);
     }
     
-    unsetCookie() {
+    unsetCookie(event) {
         if(this.state.redirect) {
             const cookies = new Cookies();
             cookies.remove('hddt');
@@ -60,7 +60,7 @@ class Navbar extends Component {
                                     <a className="nav-link" href="/diagnose-patient">Diagnose Patient</a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href={process.env.REACT_APP_SERVER_SIDE_URL + "logout"} onClick={this.unsetCookie()}>Logout</a>
+                                    <a className="nav-link" href={process.env.REACT_APP_SERVER_SIDE_URL + "logout"} onClick={e => this.unsetCookie(e)}>Logout</a>
                                 </li> 
                             </ul>
                         </div>
