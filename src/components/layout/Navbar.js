@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import Cookies  from 'js-cookie';
 import Cookies from 'universal-cookie';
 
 class Navbar extends Component {
 
     constructor(props) {
         super(props);
+        const cookies = new Cookies();
         this.state = {
-           cookieName : Cookies.get('hddt')
+           cookieName : cookies.get('hddt')
         };
         this.unsetCookie = this.unsetCookie.bind(this);
     }

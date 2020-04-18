@@ -1,8 +1,8 @@
-import Cookies  from 'js-cookie';
-
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
 const helpers = {
     'checkIfCookiesExists' : function() {
-        if(Cookies.get('hddt')) {
+        if(cookies.get('hddt')) {
             return true;
         }
         return false;
