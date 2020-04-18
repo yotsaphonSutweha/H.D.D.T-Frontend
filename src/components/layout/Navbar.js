@@ -7,7 +7,7 @@ class Navbar extends Component {
     constructor(props) {
         super(props);
         this.state = {
-           cookieName : Cookies.get('hddt')
+           cookieName : Cookies.get('session')
         };
     }
 
