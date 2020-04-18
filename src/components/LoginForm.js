@@ -3,6 +3,7 @@ import PrimaryButton from './layout/PrimaryBotton';
 import axios from 'axios';
 import DangerAlert from './layout/DangerAlert';
 import { Redirect } from 'react-router-dom';
+import Cookies from 'universal-cookie';
 
 class LoginForm extends Component {
     constructor(props) {
@@ -12,11 +13,12 @@ class LoginForm extends Component {
             password: "",
             error: false,
             errorMessage: "",
-            redirect: false
+            redirect: false,
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.redirectToPatientsPage = this.redirectToPatientsPage.bind(this);
+        this.setCookie = this.setCookie.bind(this);
     }
 
     handleChange(event) {
@@ -27,6 +29,13 @@ class LoginForm extends Component {
     redirectToPatientsPage() {
         if(this.state.redirect) {
             return <Redirect to='/patients' />
+        }
+    }
+
+    setCookie() {
+        if(this.state.redirect) {
+            const cookies = new Cookies();
+            cookies.set('hddt', 'signed_in_cookie', { path: '/' });
         }
     }
 
@@ -63,6 +72,7 @@ class LoginForm extends Component {
             <div className="container">
                 {this.state.error === true ? <DangerAlert message={this.state.errorMessage}/> : null}
                 {this.redirectToPatientsPage()}
+                {this.setCookie()}
                  <div class="content-wrapper user-form">
                     <form onSubmit={this.handleSubmit}>
                         <div className="form-group">
