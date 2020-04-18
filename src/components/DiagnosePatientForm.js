@@ -168,7 +168,6 @@ class DiagnosePatientForm extends Component {
                 errorMessage : error.response.data.message
             });
         });
-
     }
     render () {
             if (this.state.completedDiagnosis) {
