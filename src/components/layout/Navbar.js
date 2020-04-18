@@ -15,8 +15,8 @@ class Navbar extends Component {
         if  (this.state.cookieName === undefined) {
             return (
                 <div>
-                    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                        <a className="navbar-brand" href="/">H.D.D.T</a>
+                    <nav className="navbar navbar-expand-lg navbar-light bg-light navbar-custom">
+                        <a className="navbar-brand" href="/home">H.D.D.T</a>
                         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="top-nav" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
@@ -37,7 +37,7 @@ class Navbar extends Component {
         else {
             return (
                 <div>
-                    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <nav class="navbar navbar-expand-lg navbar-light bg-light  navbar-custom">
                         <a className="navbar-brand" href="/patients">Patients</a>
                         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="top-nav" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>

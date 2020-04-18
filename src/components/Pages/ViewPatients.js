@@ -53,6 +53,7 @@ class ViewPatients extends Component {
                     {this.state.error === false ? 
                         <div className="container">
                             <Header title={title}/>
+                            <div className="underline"></div>
                             <PatientList patients={this.state.patients} awaiting={false}/>
                         </div>
                     : 

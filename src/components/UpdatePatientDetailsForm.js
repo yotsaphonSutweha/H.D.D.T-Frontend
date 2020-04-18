@@ -186,9 +186,12 @@ class UpdatePatientDetailsForm extends Component {
     render () {
             return (
                 <div className="container">
-                <Header title="Edit details"/>
+                <Header title="Edit Details"/>
+                <div className="underline"></div>
                 {this.state.completedUpdate === true ? this.refreshThePage(): null }
                 <div className="card-wrapper">
+                    <h4><b>Personal Information</b></h4>
+                    <div className="underline-leftest"></div>
                     <form onSubmit={this.handleSubmit}>
                         <div className="form-row">
                             <div className="form-group col-md-4">
@@ -209,7 +212,8 @@ class UpdatePatientDetailsForm extends Component {
                             <input type="text" className= "form-control" name="address" value={this.state.address} onChange={this.handleChange}></input>
                         </div>
                         <div className="form-group"> 
-                        <h4>Next of Kin</h4>
+                        <h4><b>Next of Kin</b></h4>
+                        <div className="underline-leftest"></div>
                             <div className="form-row">
                                 <div className="form-group col-md-6">
                                     <label for="nextOfKin1FirstName"><b>First name</b></label>
@@ -229,7 +233,8 @@ class UpdatePatientDetailsForm extends Component {
                                 </div>
                             </div>
                         </div>
-                        <h4>Medical Infomration</h4>
+                        <h4><b>Medical Information</b></h4>
+                        <div className="underline-leftest"></div>
                         <div className="form-row">
                                 <div className="form-group col-md-4">
                                     <p><b>Age:</b> {this.state.age}</p>

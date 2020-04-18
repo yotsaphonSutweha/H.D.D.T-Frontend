@@ -113,7 +113,8 @@ class PatientDetails extends Component {
             return (
                 <div className="container">
                     <div className="card-wrapper">
-                        <h4>Personal Information</h4>
+                        <h4><b>Personal Information</b></h4>
+                        <div className="underline-leftest"></div>
                         <div className="row">
                             <div className="col-lg-3">
                                 <p><b>First name:</b> {this.props.patientDetails.first_name}</p>
@@ -133,7 +134,8 @@ class PatientDetails extends Component {
                                 <p><b>Address:</b> {this.props.patientDetails.address}</p>
                             </div>
                         </div>
-                        <h4>Next of Kin</h4>
+                        <h4><b>Next of Kin</b></h4>
+                        <div className="underline-leftest"></div>
                         <div className="form-row">
                             <div className="form-group col-md-6">
                                 <p><b>First name:</b> {this.props.patientDetails.next_of_kin1_first_name}</p>
@@ -148,7 +150,8 @@ class PatientDetails extends Component {
                                 <p><b>First name:</b> {this.props.patientDetails.next_of_kin2_second_name}</p>
                             </div>
                         </div>
-                        <h4>Medical Infomration</h4>
+                        <h4><b>Medical Infomration</b></h4>
+                        <div className="underline-leftest"></div>
                         <div className="form-row">
                                 <div className="form-group col-md-4">
                                     <p><b>Age:</b> {this.props.patientDetails.medical_data.age}</p>

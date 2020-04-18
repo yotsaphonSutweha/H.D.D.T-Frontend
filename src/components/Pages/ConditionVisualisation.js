@@ -366,6 +366,7 @@ class ConditionVisualisation extends Component {
                         <div className="container">
                             <div className="heading">
                                 <h3><b>Patient:</b> {this.state.firstName} {this.state.secondName}</h3>
+                                <div className="underline"></div>
                                 <h4 className="heading"><b>Condition Visualisation</b></h4>
                                 <p>Heart disease diagnosis of the patient against the existing data</p>
                             </div>

@@ -9,12 +9,18 @@ import DiagnosePatient from './components/Pages/DiagnosePatient';
 import ConditionVisualisation from './components/Pages/ConditionVisualisation';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 import ViewPatientsWithSeverity from './components/Pages/ViewPatientsWithSeverity';
+import Landing from './components/Pages/Landing';
 
 class App extends Component {
   render () {
     return (
       <Router>
         <div className="App">
+          <Route path="/home" render={props => (
+            <React.Fragment>
+                <Landing/>
+            </React.Fragment>
+          )}/>
           <Route path="/register" render={props => (
             <React.Fragment>
                <Registration />

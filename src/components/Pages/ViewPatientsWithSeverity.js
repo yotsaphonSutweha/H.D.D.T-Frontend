@@ -33,7 +33,7 @@ class ViewPatientsWithSeverity extends Component {
         });
     }
     render () {
-        const title = "Opeartion Awaiting List";
+        const title = "Operation Awaiting List";
         if (!helpers.checkIfCookiesExists()) {
             return (
                 <div>
@@ -53,6 +53,7 @@ class ViewPatientsWithSeverity extends Component {
                     {this.state.error === false ? 
                          <div className="container">
                             <Header title={title}/>
+                            <div className="underline"></div>
                             <PatientList patients={this.state.patients} awaiting={true}/>
                         </div>
                     :

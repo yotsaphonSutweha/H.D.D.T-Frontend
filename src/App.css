@@ -34,7 +34,7 @@ a {
 .card-wrapper {
   margin: 50px 0px;
   padding: 30px 20px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 4px 8px 0 #00C68E, 0 6px 20px 0 #00C68E;
 }
 
 .table {
@@ -75,6 +75,7 @@ a {
 
 .heading {
   text-align: center;
+  margin-top: 10px;
 }
 
 .register-login-space {
@@ -91,3 +92,33 @@ a {
   display: block;
 }
 
+
+.underline {
+  margin-top: 40px;
+  width: 100px;
+  border-bottom: 3px solid #00C68E;
+  margin: auto;
+}
+
+.underline-leftest {
+  width: 100px;
+  border-bottom: 3px solid #00C68E;
+  margin-bottom: 10px;
+}
+
+.landing-page-content {
+  margin-top: 120px;
+}
+
+.landing-page-images {
+  display: block;
+  margin: auto;
+}
+
+.navbar-custom {
+  background-color: #00C68E !important;
+}
+
+.nav-link {
+  color: white;
+}

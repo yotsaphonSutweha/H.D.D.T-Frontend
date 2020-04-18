@@ -180,9 +180,12 @@ class DiagnosePatientForm extends Component {
                 return (
                     <div className="container">
                         <Header title="Diagnose Patient"/>
+                        <div className="underline"></div>
                         {this.state.inputError === true ? <DangerAlert message={this.state.errorMessage}/> : null}
                         <div className="card-wrapper">
                             <form onSubmit={this.handleSubmit}>
+                                <h4><b>Personal Information</b></h4>
+                                <div className="underline-leftest"></div>
                                 <div className="form-row">
                                     <div className="form-group col-md-4">
                                         <label for="first_name">First name</label>
@@ -202,7 +205,8 @@ class DiagnosePatientForm extends Component {
                                     <input type="text" className= "form-control" name="address" value={this.state.address} onChange={this.handleChange}></input>
                                 </div>
                                 <div className="form-group"> 
-                                <h4>Next of Kin</h4>
+                                <h4><b>Next of Kin</b></h4>
+                                <div className="underline-leftest"></div>
                                     <div className="form-row">
                                         <div className="form-group col-md-6">
                                             <label for="nextOfKin1FirstName">First name</label>
@@ -222,7 +226,8 @@ class DiagnosePatientForm extends Component {
                                         </div>
                                     </div>
                                 </div>
-        
+                                <h4><b>Medical Information</b></h4>
+                                <div className="underline-leftest"></div>
                                 <div className="form-row">
                                     <div className="form-group col-md-3">
                                         <label for="age">Age</label>
