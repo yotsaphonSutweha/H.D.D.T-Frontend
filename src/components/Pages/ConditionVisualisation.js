@@ -42,7 +42,8 @@ class ConditionVisualisation extends Component {
             severityAssigned: false,
             source : null,
             error: false,
-            errorMessage: ''
+            errorMessage: '',
+            visualisationError: false
         }
         this.handleChangeX = this.handleChangeX.bind(this);
         this.handleChangeY = this.handleChangeY.bind(this);
@@ -54,6 +55,15 @@ class ConditionVisualisation extends Component {
         this.handleAssign = this.handleAssign.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.convertValuesBackToOriginal = this.convertValuesBackToOriginal.bind(this);
+        this.checkError = this.checkError.bind(this);
+    }
+
+    checkError() {
+       if (this.state.visualisationError === true) {
+           this.setState({
+               visualisationError: false
+           });
+       }
     }
 
     handleChangeX(event) {
@@ -277,8 +287,8 @@ class ConditionVisualisation extends Component {
             this.setState({ source: "data:;base64," + base64 });
         }).catch(error => {
             this.setState({
-                error: true,
-                errorMessage : error.response.data.message
+                visualisationError: true,
+                errorMessage : 'Please choose appropriate medical data option in the drop down(s).'
             })
         });
     }
@@ -370,6 +380,7 @@ class ConditionVisualisation extends Component {
                                 <h4 className="heading"><b>Condition Visualisation</b></h4>
                                 <p>Heart disease diagnosis of the patient against the existing data</p>
                             </div>
+                            {this.state.visualisationError === true ? <DangerAlert message={this.state.errorMessage}/> :  this.checkError()}
                             {this.state.severityAssigned === true ? <SuccessAlert message="Severity has been assigned successfully! Patient is added to the operation awaiting list."/> : null}
                             <div className="row">
                                 <div className="img-area diagnosis-img">
@@ -395,7 +406,7 @@ class ConditionVisualisation extends Component {
                                     <div class="form-group col-lg-6">
                                         <label for="condition1">Medical Condition 1: X axis</label>
                                         <select class="form-control" id="condition1" value={this.state.selectedXAxis} onChange={this.handleChangeX}>
-                                            <option>Choose...</option>
+                                            <option selected>Choose...</option>
                                             <option>Age</option>
                                             <option>Number of Major Vessels</option>
                                             <option>Serum Cholesterol</option>
@@ -414,7 +425,7 @@ class ConditionVisualisation extends Component {
                                         <div class="form-group col-lg-6">
                                         <label for="condition2">Medical Condition 2: Y axis</label>
                                         <select class="form-control" id="condition2" value={this.state.selectedYAxis} onChange={this.handleChangeY}>
-                                            <option>Choose...</option>
+                                            <option selected>Choose...</option>
                                             <option>Age</option>
                                             <option>Number of Major Vessels</option>
                                             <option>Serum Cholesterol</option>

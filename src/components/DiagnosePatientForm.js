@@ -43,6 +43,9 @@ class DiagnosePatientForm extends Component {
         this.convertCp = this.convertCp.bind(this);
         this.convertThal = this.convertThal.bind(this);
         this.checkIfValueIsInteger = this.checkIfValueIsInteger.bind(this);
+        this.convertGender = this.convertGender.bind(this);
+        this.convertFbs = this.convertFbs.bind(this);
+        this.convertExang = this.convertExang.bind(this);
     }
 
     handleChange(event) {
@@ -73,7 +76,7 @@ class DiagnosePatientForm extends Component {
             return 4;
         }
         else {
-            this.setState({inputError: true});
+            return 'Choose...';
         }
     }
 
@@ -88,7 +91,7 @@ class DiagnosePatientForm extends Component {
             return 7;
         }
         else {
-            this.setState({inputError: true});
+            return 'Choose...';
         }
     }
 
@@ -103,7 +106,7 @@ class DiagnosePatientForm extends Component {
             return 3;
         }
         else {
-            this.setState({inputError: true});
+            return 'Choose...';
         }
     }
 
@@ -118,9 +121,46 @@ class DiagnosePatientForm extends Component {
             return 2;
         }
         else {
-            this.setState({inputError: true});
+            return 'Choose...';
         }
     }
+
+    convertGender(value) {
+        if (value === 'Male') {
+            return 1;
+        }
+        else if (value === 'Female') {
+            return 0;
+        }
+        else {
+            return 'Choose...';
+        }
+    }
+
+    convertFbs(value) {
+        if (value === 'Yes') {
+            return 1;
+        }
+        else if (value === 'No') {
+            return 0;
+        }
+        else {
+            return 'Choose...';
+        }
+    }
+
+    convertExang(value) {
+        if (value === 'Yes') {
+            return 1;
+        }
+        else if (value === 'No') {
+            return 0;
+        }
+        else {
+            return 'Choose...';
+        }
+    }
+
 
     handleSubmit(event) {
         event.preventDefault();
@@ -143,14 +183,14 @@ class DiagnosePatientForm extends Component {
                 next_of_kin2_first_name:  this.state.nextOfKin2FirstName,
                 next_of_kin2_second_name: this.state.nextOfKin2SecondName,
                 age: this.state.age,
-                gender: this.state.gender == "Male" ? 1 : 0,
+                gender: this.convertGender(this.state.gender),
                 cp: this.convertCp(this.state.cp),
                 trestbps: this.state.trestbps,
                 chol: this.state.chol,
-                fbs: this.state.fbs == "Yes" ? 1 : 0,
+                fbs: this.convertFbs(this.state.fbs),
                 restecg: this.convertRestecg(this.state.restecg),
                 thalach: this.state.thalach,
-                exang: this.state.exang == "Yes" ? 1 : 0,
+                exang: this.convertExang(this.state.exang),
                 oldpeak: this.state.oldpeak,
                 slope: this.convertSlope(this.state.slope),
                 ca: this.state.ca,
