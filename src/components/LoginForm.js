@@ -13,12 +13,13 @@ class LoginForm extends Component {
             password: "",
             error: false,
             errorMessage: "",
-            redirect: false,
+            redirect: false
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.redirectToPatientsPage = this.redirectToPatientsPage.bind(this);
         this.setCookie = this.setCookie.bind(this);
+        this.checkForError = this.checkForError.bind(this);
     }
 
     handleChange(event) {
@@ -29,6 +30,12 @@ class LoginForm extends Component {
     redirectToPatientsPage() {
         if(this.state.redirect) {
             return <Redirect to='/patients' />
+        }
+    }
+
+    checkForError() {
+        if (this.state.error === true) {
+            return this.setState({error : false});
         }
     }
 
@@ -43,6 +50,11 @@ class LoginForm extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
+        if (this.state.error === true) {
+            this.setState({
+                error : false
+            });
+        }
         axios({
             headers : {
                 'Content-Type': 'application/json',
@@ -72,7 +84,7 @@ class LoginForm extends Component {
     render () {
         return (
             <div className="container">
-                {this.state.error === true ? <DangerAlert message={this.state.errorMessage}/> : null}
+                {this.state.error === true ? <DangerAlert message={this.state.errorMessage}/> : this.checkForError()}
                 {this.redirectToPatientsPage()}
                 {this.setCookie()}
                  <div class="content-wrapper user-form">

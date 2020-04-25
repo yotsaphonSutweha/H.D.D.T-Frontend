@@ -204,7 +204,7 @@ class ConditionVisualisation extends Component {
             this.setState({severityAssigned: true})
         }).catch(error => {
             this.setState({
-                error: true,
+                visualisationError: true,
                 errorMessage: error.response.data.message
             });
         });
@@ -288,7 +288,7 @@ class ConditionVisualisation extends Component {
         }).catch(error => {
             this.setState({
                 visualisationError: true,
-                errorMessage : 'Please choose appropriate medical data option in the drop down(s).'
+                errorMessage : 'Please make sure that the selected options are appropriate or make sure that you have access to this functionality. '
             })
         });
     }
@@ -328,6 +328,7 @@ class ConditionVisualisation extends Component {
             thal: res.data.medical_data.thal,
             diagnosis: res.data.medical_data.diagnosis
         })).catch(error => {
+            console.log(error.response.data.message)
             this.setState({
                 error: true,
                 errorMessage: error.response.data.message
@@ -394,7 +395,7 @@ class ConditionVisualisation extends Component {
                                             <input className="form-control" placeholder="Severity" name="severity" value={this.state.severity} onChange={this.handleChange}></input>
                                         </div>
                                         <div className="col-lg-2">
-                                            <button type="submit" className="btn btn-secondary button" onClick={e => this.handleAssign(e)}>
+                                            <button type="submit" className="btn btn-secondary button" id="assignButton" onClick={e => this.handleAssign(e)}>
                                                 Assign
                                             </button>
                                         </div>
@@ -444,7 +445,7 @@ class ConditionVisualisation extends Component {
                                 </div>
                                 <div className="row">
                                     <div className="col-lg-2"> 
-                                        <button type="submit" className="btn btn-secondary button" onClick={e => this.handleSubmit(e)}>
+                                        <button type="submit" className="btn btn-secondary button"  id="generateButton" onClick={e => this.handleSubmit(e)}>
                                             Generate
                                         </button>
                                     </div>

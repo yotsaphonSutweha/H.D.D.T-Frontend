@@ -17,7 +17,7 @@ a {
 
 .content-wrapper {
   position: relative;
-  top: 150px;
+  top: 100px;
 }
 
 .user-form {
@@ -121,4 +121,8 @@ a {
 
 .nav-link {
   color: white;
+}
+
+.alert {
+  margin-top: 10px;
 }

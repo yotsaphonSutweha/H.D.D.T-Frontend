@@ -114,13 +114,13 @@ class Results extends Component {
                     <div className="card-wrapper">
                         <div className="row heading">
                             <div className="col-lg-6">
-                                <h5>
+                                <h5 id="diagnosticAccuracy">
                                     <b>Diagnostic Accuracy</b>
                                 </h5>
                                 <p class="card-text">{this.props.diagnosticResult.accuracy} %</p>
                             </div>
                             <div className="col-lg-6">
-                                <h5>
+                                <h5 id="diagnosticResult">
                                     <b>Diagnostic Result</b>
                                 </h5>
                                 <p class="card-text">{this.convertDiagnosticResult(this.props.diagnosticResult.medical_details.diagnosis)}</p>
@@ -128,63 +128,63 @@ class Results extends Component {
                         </div>
                     </div>
                      <div className="card-wrapper">
-                            <h4>Personal Information</h4>
+                            <h4 id="personalInfoHeading">Personal Information</h4>
                             <div className="row">
                                 <div className="col-lg-4">
-                                    <p><b>First name:</b> {this.props.diagnosticResult.personal_details.first_name}</p>
+                                    <p id="firstName"><b>First name:</b> {this.props.diagnosticResult.personal_details.first_name}</p>
                                 </div>
                                 <div className="col-lg-4">
-                                    <p><b>Second name:</b> {this.props.diagnosticResult.personal_details.second_name}</p>
+                                    <p id="secondName"><b>Second name:</b> {this.props.diagnosticResult.personal_details.second_name}</p>
                                 </div>
                             </div>
-                            <h4>Medical Information</h4>
+                            <h4 id="medicalInfoHeading">Medical Information</h4>
                             <div className="form-row">
                                 <div className="form-group col-md-4">
-                                    <p><b>Age:</b> {this.props.diagnosticResult.medical_details.age}</p>
+                                    <p id="age"><b>Age:</b> {this.props.diagnosticResult.medical_details.age}</p>
                                 </div>
                                 <div className="form-group col-md-4">
-                                    <p><b>Gender:</b> {this.convertGender(this.props.diagnosticResult.medical_details.sex)}</p>
+                                    <p id="gender"><b>Gender:</b> {this.convertGender(this.props.diagnosticResult.medical_details.sex)}</p>
                                 </div>
                                 <div className="form-group col-md-4">
-                                    <p><b>Serum Cholestrol in mg/dl:</b> {this.props.diagnosticResult.medical_details.chol}</p>
-                                </div>
-                            </div>
-                            <div className="form-row">
-                                <div className="form-group col-md-4">
-                                    <p><b>Chest-pain Type:</b> {this.convertCp(this.props.diagnosticResult.medical_details.cp)}</p>
-                                </div>
-                                <div className="form-group col-md-4">
-                                    <p><b>Exercise Induced Agina:</b> {this.convertExang(this.props.diagnosticResult.medical_details.exang)}</p>
-                                </div>
-                                <div className="form-group col-md-4">
-                                    <p><b>Fasting Blood Sugar (>120mg/dl):</b>   {this.convertFbs(this.props.diagnosticResult.medical_details.fbs)}</p>
+                                    <p id="chol"><b>Serum Cholestrol in mg/dl:</b> {this.props.diagnosticResult.medical_details.chol}</p>
                                 </div>
                             </div>
                             <div className="form-row">
                                 <div className="form-group col-md-4">
-                                    <p><b>ST Depression Induced:</b> {this.props.diagnosticResult.medical_details.oldpeak}</p>
+                                    <p id="cp"><b>Chest-pain Type:</b> {this.convertCp(this.props.diagnosticResult.medical_details.cp)}</p>
                                 </div>
                                 <div className="form-group col-md-4">
-                                    <p><b>Resting Electrocardiographic Result:</b> {this.convertRestecg(this.props.diagnosticResult.medical_details.restecg)}</p>
+                                    <p id="exang"><b>Exercise Induced Agina:</b> {this.convertExang(this.props.diagnosticResult.medical_details.exang)}</p>
                                 </div>
                                 <div className="form-group col-md-4">
-                                    <p><b>Number of Major Vessels:</b> {this.props.diagnosticResult.medical_details.ca}</p>
-                                </div>
-                            </div>
-                            <div className="form-row">
-                                <div className="form-group col-md-4">
-                                    <p><b>Thalassemia:</b> {this.convertThal(this.props.diagnosticResult.medical_details.thal)}</p>
-                                </div>
-                                <div className="form-group col-md-4">
-                                    <p><b>Maximum Heart Rate Achieved:</b> {this.props.diagnosticResult.medical_details.thalach}</p>
-                                </div>
-                                <div className="form-group col-md-4">
-                                    <p><b>Resting Blood Pressure in mmHg:</b> {this.props.diagnosticResult.medical_details.trestbps}</p>
+                                    <p id="fbs"><b>Fasting Blood Sugar (>120mg/dl):</b>   {this.convertFbs(this.props.diagnosticResult.medical_details.fbs)}</p>
                                 </div>
                             </div>
                             <div className="form-row">
                                 <div className="form-group col-md-4">
-                                    <p><b>Slope of Peak Exercise ST Segment:</b> {this.convertSlope(this.props.diagnosticResult.medical_details.slope)}</p>
+                                    <p id="oldpeak"><b>ST Depression Induced:</b> {this.props.diagnosticResult.medical_details.oldpeak}</p>
+                                </div>
+                                <div className="form-group col-md-4">
+                                    <p id="restecg"><b>Resting Electrocardiographic Result:</b> {this.convertRestecg(this.props.diagnosticResult.medical_details.restecg)}</p>
+                                </div>
+                                <div className="form-group col-md-4">
+                                    <p id="ca"><b>Number of Major Vessels:</b> {this.props.diagnosticResult.medical_details.ca}</p>
+                                </div>
+                            </div>
+                            <div className="form-row">
+                                <div className="form-group col-md-4">
+                                    <p id="thal"><b>Thalassemia:</b> {this.convertThal(this.props.diagnosticResult.medical_details.thal)}</p>
+                                </div>
+                                <div className="form-group col-md-4">
+                                    <p id="thalach"><b>Maximum Heart Rate Achieved:</b> {this.props.diagnosticResult.medical_details.thalach}</p>
+                                </div>
+                                <div className="form-group col-md-4">
+                                    <p id="trestbps"><b>Resting Blood Pressure in mmHg:</b> {this.props.diagnosticResult.medical_details.trestbps}</p>
+                                </div>
+                            </div>
+                            <div className="form-row">
+                                <div className="form-group col-md-4">
+                                    <p id="slope"><b>Slope of Peak Exercise ST Segment:</b> {this.convertSlope(this.props.diagnosticResult.medical_details.slope)}</p>
                                 </div>
                             </div>
                         </div>

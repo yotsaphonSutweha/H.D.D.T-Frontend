@@ -99,7 +99,8 @@ class RegisterForm extends Component {
                                 <div className="form-group col-md-6">
                                     <label for="jobRole">Role selection</label>
                                     <select className="form-control" name="jobRole" value={this.state.jobRole} onChange={this.handleChange} required>
-                                        <option selected>Doctor</option>
+                                        <option selected>Choose...</option>
+                                        <option>Doctor</option>
                                         <option>Nurse</option>
                                     </select>
                                 </div>

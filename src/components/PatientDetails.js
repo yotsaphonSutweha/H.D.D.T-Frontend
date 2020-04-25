@@ -103,6 +103,7 @@ class PatientDetails extends Component {
 
 
     render () {
+        console.log(this.props.patientDetails)
         if (this.props.patientDetails.medical_data === undefined) {
             return (
                 <Loading />
@@ -126,7 +127,7 @@ class PatientDetails extends Component {
                                 <p><b>Contact number:</b> {this.props.patientDetails.contact_number}</p>
                             </div>
                             <div className="col-lg-3">
-                                <p><b>Assigned doctor:</b> {this.props.patientDetails.contact_number}</p>
+                                <p><b>Assigned doctor:</b> {this.props.patientDetails.assigned_doctor_name}</p>
                             </div>
                         </div>
                         <div className="row">
@@ -202,6 +203,9 @@ class PatientDetails extends Component {
                                 </div>
                                 <div className="form-group col-md-4">
                                     <p><b>Severity:</b> {this.convertSeverity(this.props.patientDetails.severity)}</p>
+                                </div>
+                                <div className="form-group col-md-4">
+                                    <p><b>Diagnosis:</b> {this.props.patientDetails.medical_data.diagnosis === 0 ? "Undiagnosed" : "Diagnosed"}</p>
                                 </div>
                             </div>
                         <div className="row">

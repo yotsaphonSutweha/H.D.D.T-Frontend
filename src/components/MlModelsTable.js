@@ -16,7 +16,7 @@ class MlModelsTable extends Component {
     render() {
       return(
           <div className="Container">
-            <table className="table table-striped table-dark">
+            <table className="table table-striped table-dark " id="mlModelsTable">
                 <thead>
                     <tr>
                         <th scope="col">Machine Learning Model</th>

@@ -7,7 +7,7 @@ import Login from './components/Pages/LogIn';
 import ViewPatient from './components/Pages/ViewPatient';
 import DiagnosePatient from './components/Pages/DiagnosePatient';
 import ConditionVisualisation from './components/Pages/ConditionVisualisation';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
 import ViewPatientsWithSeverity from './components/Pages/ViewPatientsWithSeverity';
 import Landing from './components/Pages/Landing';
 
@@ -16,6 +16,9 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
+          <Route exact path="/" render={() => (
+            <Redirect to="/home" />
+          )}/>
           <Route path="/home" render={props => (
             <React.Fragment>
                 <Landing/>
