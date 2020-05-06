@@ -292,7 +292,7 @@ class DiagnosePatientForm extends Component {
         
                                 <div className="form-row">
                                     <div className="form-group col-md-3">
-                                        <label for="exang">Exercise Induced Agina</label>
+                                        <label for="exang">Exercise Induced Angina</label>
                                         <select className="form-control" name="exang" value={this.state.exang} onChange={this.handleChange}required>
                                             <option selected>Choose...</option>
                                             <option>Yes</option>
