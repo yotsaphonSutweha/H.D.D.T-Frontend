@@ -101,7 +101,7 @@ class PatientItem extends Component {
                                     <h5 align="center"><b>Age</b></h5>
                                     <p className="patient-detail">{this.state.age}</p>
                                 </div>
-                                {this.state.awaiting_list_flag == true ?  <div className="col-lg-2">
+                                {this.state.awaiting_list_flag === true ?  <div className="col-lg-2">
                                     <h5 align="center"><b>Severity</b></h5>
                                     <p className="patient-detail">{this.convertSeverity(this.state.severity)}</p>
                                 </div> : <div className="col-lg-2">
