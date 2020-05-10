@@ -18,6 +18,7 @@ class PatientItem extends Component {
             error: false,
             errorMessage: ''
         };
+        // Binding is used to bind the below methods to the current context of this class
         this.handleChange = this.handleChange.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
         this.convertSeverity = this.convertSeverity.bind(this);
@@ -42,6 +43,7 @@ class PatientItem extends Component {
         }
     }
 
+    // Make DELETE request to the backend API to delete a patient.
     handleDelete(event) {
         event.preventDefault();
         axios({
@@ -65,7 +67,7 @@ class PatientItem extends Component {
             });
         });
     }
-
+    // Render method is used for rending HTML elements
     render () {
             if (this.state.delete_success === true) {
               return (

@@ -3,6 +3,7 @@ import RegisterForm from '../RegisterForm'
 import Header from '../layout/Header'
 import Navbar from '../layout/Navbar';
 class Registration extends Component {
+    // Render method is used for rending HTML elements
     render () {
         const title = "Register page";
         return (

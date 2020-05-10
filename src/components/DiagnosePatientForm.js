@@ -36,6 +36,7 @@ class DiagnosePatientForm extends Component {
             inputError: false,
             errorMessage: ''
         };
+        // Binding is used to bind the below methods to the current context of this class
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.convertRestecg = this.convertRestecg.bind(this);
@@ -62,6 +63,7 @@ class DiagnosePatientForm extends Component {
         }
     }
 
+    // The convert methods are used to convert medical data that are represented as numbers into plan language.
     convertCp(value) {
         if (value === 'Typical anginal') {
             return 1;
@@ -161,7 +163,7 @@ class DiagnosePatientForm extends Component {
         }
     }
 
-
+    // Make POST request to the backend API to make diagnosis.
     handleSubmit(event) {
         event.preventDefault();
         axios({
@@ -209,6 +211,7 @@ class DiagnosePatientForm extends Component {
             });
         });
     }
+    // Render method is used for rending HTML elements
     render () {
             if (this.state.completedDiagnosis) {
                 console.log(this.state.results.accuracy)

@@ -14,6 +14,7 @@ class ViewPatientsWithSeverity extends Component {
             errorMessage: ''
         }
     }
+    // This is a React lifecycle method used to make GET request to the backend and load data onto the webpage.
     componentDidMount() {
         axios({
             headers : {
@@ -32,6 +33,7 @@ class ViewPatientsWithSeverity extends Component {
             });
         });
     }
+    // Render method is used for rending HTML elements
     render () {
         const title = "Operation Awaiting List";
         if (!helpers.checkIfCookiesExists()) {

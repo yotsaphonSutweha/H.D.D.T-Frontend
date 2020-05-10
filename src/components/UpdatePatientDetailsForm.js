@@ -35,6 +35,7 @@ class UpdatePatientDetailsForm extends Component {
             results: {},
             completedUpdate: false
         };
+        // Binding is used to bind the below methods to the current context of this class
         this.handleChange = this.handleChange.bind(this);
         this.handlePatientUpdate = this.handlePatientUpdate.bind(this);
         this.refreshThePage = this.refreshThePage.bind(this);
@@ -47,7 +48,7 @@ class UpdatePatientDetailsForm extends Component {
         this.convertGender = this.convertGender.bind(this);
         this.convertSeverity = this.convertSeverity.bind(this);
     }
-
+    // The convert methods are used to convert medical data that are represented as numbers into plan language.
     convertSeverity(value) {
         if (value === 0) {
             return 'Undetermined';
@@ -144,7 +145,7 @@ class UpdatePatientDetailsForm extends Component {
             window.location.reload(false);
         }
     }
-
+    // Make GET request to the backend API to display information regarding the patient.
     componentDidMount() {
         axios({
             headers : {
@@ -155,7 +156,7 @@ class UpdatePatientDetailsForm extends Component {
             withCredentials: true,
         }).then(res => this.setState({firstName: res.data.first_name, secondName: res.data.second_name, address: res.data.address, contactNumber: res.data.contact_number, nextOfKin1FirstName: res.data.next_of_kin1_first_name, nextOfKin1SecondName : res.data.next_of_kin1_second_name, nextOfKin2FirstName : res.data.next_of_kin2_first_name, nextOfKin2SecondName : res.data.next_of_kin2_second_name, age: res.data.medical_data.age, gender: res.data.medical_data.sex, chol: res.data.medical_data.chol, thalach: res.data.medical_data.thalach, exang: res.data.medical_data.exang, fbs: res.data.medical_data.fbs, oldpeak: res.data.medical_data.oldpeak, restecg: res.data.medical_data.restecg, ca: res.data.medical_data.ca, slope: res.data.medical_data.slope, thal: res.data.medical_data.thal, cp: res.data.medical_data.cp, trestbps: res.data.medical_data.trestbps, severity: res.data.severity}))
     }
-
+    // Make POST request to the backend API
     handlePatientUpdate(event) {
         console.log(this.props.patientId)
         event.preventDefault();
@@ -182,7 +183,7 @@ class UpdatePatientDetailsForm extends Component {
             res.data.status === 200 ? this.setState({completedUpdate : true}) : this.setState({completedUpdate : false});
         });
     }
-
+    // Render method is used for rending HTML elements
     render () {
             return (
                 <div className="container">

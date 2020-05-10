@@ -336,6 +336,7 @@ class ConditionVisualisation extends Component {
         });
     }
 
+    // Render method is used for rending HTML elements
     render() {
         if (!helpers.checkIfCookiesExists()) {
             return (

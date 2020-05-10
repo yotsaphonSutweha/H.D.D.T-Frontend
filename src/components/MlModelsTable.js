@@ -12,7 +12,7 @@ class MlModelsTable extends Component {
         }
         return 'Undiagnosed'
     }
-
+    // Render method is used for rending HTML elements
     render() {
       return(
           <div className="Container">

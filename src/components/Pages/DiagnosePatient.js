@@ -5,6 +5,7 @@ import helpers from '../helpers/Helpers';
 import DangerAlert from '../layout/DangerAlert';
 
 class DiagnosePatient extends Component {
+    // Render method is used for rending HTML elements
     render () {
         return (
             <div>

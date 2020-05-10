@@ -5,6 +5,7 @@ class Results extends Component {
 
     constructor(props) {
         super(props);
+        // Binding is used to bind the below methods to the current context of this class
         this.convertCp = this.convertCp.bind(this);
         this.convertThal = this.convertThal.bind(this);
         this.convertSlope = this.convertSlope.bind(this);
@@ -15,6 +16,7 @@ class Results extends Component {
         this.convertDiagnosticResult = this.convertDiagnosticResult.bind(this);
     }
 
+    // The convert methods are used to convert medical data that are represented as numbers into plan language.
     convertDiagnosticResult(value) {
         if (value === 1) {
             return 'Diagnosed'
@@ -100,7 +102,7 @@ class Results extends Component {
             return 'No';
         }
     }
-
+    // Render method is used for rending HTML elements
     render () {
         console.log(this.props.diagnosticResult)
         if (this.props.diagnosticResult === undefined) {

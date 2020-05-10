@@ -5,6 +5,7 @@ class PatientDetails extends Component {
 
     constructor(props) {
         super(props);
+        // Binding is used to bind the below methods to the current context of this class
         this.convertCp = this.convertCp.bind(this);
         this.convertThal = this.convertThal.bind(this);
         this.convertSlope = this.convertSlope.bind(this);
@@ -15,6 +16,7 @@ class PatientDetails extends Component {
         this.convertSeverity = this.convertSeverity.bind(this);
     }
 
+    // The convert methods are used to convert medical data that are represented as numbers into plan language.
     convertSeverity(value) {
         if (value === 0) {
             return 'Undetermined';
@@ -101,7 +103,7 @@ class PatientDetails extends Component {
         }
     }
 
-
+    // Render method is used for rending HTML elements
     render () {
         console.log(this.props.patientDetails)
         if (this.props.patientDetails.medical_data === undefined) {

@@ -22,6 +22,7 @@ class RegisterForm extends Component {
             errorMessage: "",
             redirect: false
         };
+        // Binding is used to bind the below methods to the current context of this class
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.redirectToPatientsPage = this.redirectToPatientsPage.bind(this);
@@ -47,7 +48,7 @@ class RegisterForm extends Component {
             cookies.set('hddt', 'signed_in_cookie', { path: '/', expires: date});
         }
     }
-
+    // Make POST request to the backend API to register the user.
     handleSubmit(event) {
         event.preventDefault();
         axios({
@@ -82,7 +83,7 @@ class RegisterForm extends Component {
             });
         });
     }
-    
+    // Render method is used for rending HTML elements
     render () {
         return (
                 <div className="container">

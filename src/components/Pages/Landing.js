@@ -5,6 +5,7 @@ import HeartDiagnosisImg from '../../images/clinic.png';
 import PatientManagementImg from '../../images/record.png';
 import VisualisationsImg from '../../images/graph.png'
 class Landing extends Component {
+    // Render method is used for rending HTML elements
     render() {
         return (
             <div>

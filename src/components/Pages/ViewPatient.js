@@ -20,7 +20,7 @@ class ViewPatient extends Component {
         const parsedQuery = qs.parse(this.props.locationSearch)
         return parsedQuery;
     }
-
+    // This is a React lifecycle method used to make GET request to the backend and load data onto the webpage.
     componentDidMount() {
         const parsedQuery = this.getParsedQuery();
         axios({
@@ -40,7 +40,7 @@ class ViewPatient extends Component {
             });
         })
     }
-
+    // Render method is used for rending HTML elements
     render () {
         const title = "Patient page";
         const parsedQuery = this.getParsedQuery();
